@@ -9,6 +9,15 @@ export default class CategoryRepository implements ICategoryRepository{
   constructor() {
     this.repo = getRepository(Category)
   }
+  async findByName(name: string): Promise<Category | undefined> {
+    try {
+      const result = await this.repo.findOne({where: {name}})
+      return result
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
   async create(data: CreateCategoryInput): Promise<Category> {
     const result = await this.repo.save(data)
