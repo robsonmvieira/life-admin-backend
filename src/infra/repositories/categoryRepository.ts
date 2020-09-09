@@ -32,7 +32,11 @@ export default class CategoryRepository implements ICategoryRepository{
     return categories
   }
   async update(id: string, data: UpdateCategoryInput): Promise<Category | undefined> {
-    const updatedCategory = await this.repo.update(id, data)
+    const categoryExists = await this.repo.findOne(id)
+    if(!categoryExists){
+      return undefined
+    }
+    await this.repo.update(id, data)
    
     return await this.repo.findOne(id)
   }
