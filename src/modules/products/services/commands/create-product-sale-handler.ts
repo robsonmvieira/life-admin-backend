@@ -12,6 +12,7 @@ export default class CreateProductSalerHandler {
   }
 
   async handler(data: CreateProductSaleInput): Promise<ProductSale>{
+    data.name = data.name.trim()
     const price_base = data.price_suggest
     data.from_zero_to_four_hundred_ninety_nine= price_base * (ProfileConsulter.FromZeroToFourHundredNinetyNine /100)
     data.from_five_hundred_to_nine_hundred_ninety_nine = price_base * (ProfileConsulter.FromFiveHundredToNineHundredNinetyNine /100)
