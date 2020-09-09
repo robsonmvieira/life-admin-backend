@@ -1,6 +1,6 @@
 export default interface CreateProductSaleInput{
   sku: string
-  title: string
+  name: string
   quantity: number
   volume_points: number
   price_suggest: number
