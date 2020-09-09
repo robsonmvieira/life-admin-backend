@@ -38,8 +38,8 @@ export default class PermissionController implements ControllerBase {
   async remove(req: Request, res: Response): Promise<Response> {
     const {id} = req.params
     const service = container.resolve(RemovePermissionHandler)
-    const isDeletedCategory = await service.handler(id)
-    return res.status(200).json(isDeletedCategory)
+    const deletedPermission = await service.handler(id)
+    return res.status(200).json(deletedPermission)
 
   }
  
