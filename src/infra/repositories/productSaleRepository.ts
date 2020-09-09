@@ -3,6 +3,7 @@ import IProductSaleRepository from "@modules/products/interfaces/IProductSaleRep
 import CreateProductSaleInput from "@modules/products/dtos/create-product-sale-input";
 import UpdateProductSaleInput from "@modules/products/dtos/update-product-sale-input";
 import ProductSale from "@modules/products/models/product";
+import { exception } from 'console';
 
 export default class ProductSaleRepository implements IProductSaleRepository {
   repo: Repository<ProductSale>
@@ -12,7 +13,13 @@ export default class ProductSaleRepository implements IProductSaleRepository {
   }
 
   async create(data: CreateProductSaleInput): Promise<ProductSale> {
-    return await this.repo.save(data)
+    try {
+      return await this.repo.save(data)
+      
+    } catch (error) {
+      console.log(error)
+      throw new Error("Erro ao salvar")
+    }
   }
   
   async index(): Promise<ProductSale[]> {
@@ -50,5 +57,9 @@ export default class ProductSaleRepository implements IProductSaleRepository {
     }
     return true
 
+  }
+  async countDb():Promise<number>{
+    const total = await this.repo.count()
+    return total
   }
 }
