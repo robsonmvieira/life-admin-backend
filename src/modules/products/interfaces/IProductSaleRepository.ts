@@ -8,4 +8,5 @@ export default interface IProductSaleRepository{
   one(id: string):Promise<ProductSale| undefined>
   update(id: string, data: UpdateProductSaleInput):Promise<ProductSale | undefined>
   remove(id: string): Promise<boolean>
+  countDb():Promise<number>
 }
