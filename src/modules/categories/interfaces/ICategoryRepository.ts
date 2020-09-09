@@ -8,5 +8,7 @@ export default interface ICategoryRepository{
   one(id: string): Promise<Category | undefined>
   update(id: string, data: UpdateCategoryInput): Promise<Category | undefined>
   delete(id: string): Promise<boolean | undefined>
+  findByName(id: string): Promise<Category | undefined>
+
   
 }
