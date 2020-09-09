@@ -1,3 +1,5 @@
 export default interface UpdatePermissionInput{
-  name: string
+  name?: string
+  slug?: string,
+  description?: string
 }
