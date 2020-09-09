@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import ProductSaleController from '../../../api/product-sale-controller'
+import ProductSaleController from '@api/product-sale-controller'
 const routes = Router()
 
 const categoryCtr = new ProductSaleController()
