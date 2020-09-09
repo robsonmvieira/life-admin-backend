@@ -1,5 +1,5 @@
 import IPermissionsRepository from "@modules/permissions/interfaces/IPermissionsRepository";
-import CreatePermissionInput from '@modules/permissions/dtos/create-permitission-input'
+import CreatePermissionInput from '@modules/permissions/dtos/create-permission-input'
 import Permission from "@modules/permissions/models/permission";
 import UpdatePermissionInput from "@modules/permissions/dtos/update-permission-input";
 import { Repository, getRepository } from "typeorm";
