@@ -5,7 +5,10 @@ import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRep
 import ProductSaleRepository from '@infra/repositories/productSaleRepository'
 import IPermissionsRepository from '@modules/permissions/interfaces/IPermissionsRepository'
 import PermissionRepository from '@infra/repositories/permissionRepository'
+import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
+import RoleRepository from '@infra/repositories/roleRepository'
 
 container.registerSingleton<ICategoryRepository>("CategoryRepository", CategoryRepository)
 container.registerSingleton<IProductSaleRepository>("ProductSaleRepository", ProductSaleRepository)
 container.registerSingleton<IPermissionsRepository>("PermissionsRepository", PermissionRepository)
+container.registerSingleton<IRoleRepository>("RoleRepository", RoleRepository)
