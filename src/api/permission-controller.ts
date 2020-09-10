@@ -10,20 +10,20 @@ import RemovePermissionHandler from "@modules/permissions/services/commands/remo
 export default class PermissionController implements ControllerBase {
   async index(req: Request, res: Response): Promise<Response> {
    const service = container.resolve(ListPermissionsHandler)
-   const categories = await service.handler()
-   return res.status(200).json(categories)
+   const permissions = await service.handler()
+   return res.status(200).json(permissions)
   }
   async one(req: Request, res: Response): Promise<Response> {
     const {id} = req.params
     const service = container.resolve(GetOnePermissionHandler)
-    const hasCategory = await service.handler(id)
-    return res.status(200).json(hasCategory)
+    const haspermission = await service.handler(id)
+    return res.status(200).json(haspermission)
 
   }
   async create(req: Request, res: Response): Promise<Response> {
-    const newCategory = req.body
+    const newpermission = req.body
     const service = container.resolve(CreatePermissionHandler)
-    const result = await service.handler(newCategory)
+    const result = await service.handler(newpermission)
     return res.status(201).json(result)
 
   }
