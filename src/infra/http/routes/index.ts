@@ -5,6 +5,7 @@ import adminRoutes from './admin-router'
 import saleRoutes from './sale-router'
 import userRoutes from './user-router'
 import permissionRoutes from './permission-router'
+import rolesRoutes from './role-router'
 const routes = Router()
 
 routes.use('/categories', categoryRoutes)
@@ -13,6 +14,7 @@ routes.use('/admin', adminRoutes)
 routes.use('/users', userRoutes)
 routes.use('/sales', saleRoutes)
 routes.use('/permissions', permissionRoutes)
+routes.use('/roles', rolesRoutes)
 
 
 export default routes
