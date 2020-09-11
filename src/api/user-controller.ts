@@ -1,54 +1,46 @@
 import { Request, Response } from "express";
 import ControllerBase from "./controller-base";
 import { container } from "tsyringe";
-import ListCategoryHandler from "@modules/categories/services/queries/list-category-handler";
-import GetCategoryHandler from "@modules/categories/services/queries/getone-category-handler";
-import CreateCategoryHandler from "@modules/categories/services/commands/create-category-handler";
-import UpdadeCategoryHandler from "@modules/categories/services/commands/update-category-handler";
-import RemoveCategoryHandler from "@modules/categories/services/commands/remove-category-handler";
-import GetCategoryByNameHandler from "@modules/categories/services/queries/get-by-name-category-handler";
+
+import ListUsersHandler from "@modules/users/services/queries/list-users-handler";
+import CreateUserHandler from "@modules/users/services/commands/create-user-handler";
+import UpdateUserHandler from "@modules/users/services/commands/update-user-handler";
+import RemoveUserHandler from "@modules/users/services/commands/remove-user-handler";
+import GetOneUserHandler from "@modules/users/services/queries/getone-user-handler";
 
 export default class UserController implements ControllerBase {
   async index(req: Request, res: Response): Promise<Response> {
-   const service = container.resolve(ListCategoryHandler)
-   const categories = await service.handler()
-   return res.status(200).json(categories)
+   const service = container.resolve(ListUsersHandler)
+   const users = await service.handler()
+   return res.status(200).json(users)
   }
   async one(req: Request, res: Response): Promise<Response> {
     const {id} = req.params
-    const service = container.resolve(GetCategoryHandler)
-    const hasCategory = await service.handler(id)
-    return res.status(200).json(hasCategory)
+    const service = container.resolve(GetOneUserHandler)
+    const hasUser = await service.handler(id)
+    return res.status(200).json(hasUser)
 
   }
   async create(req: Request, res: Response): Promise<Response> {
-    const newCategory = req.body
-    const service = container.resolve(CreateCategoryHandler)
-    const result = await service.handler(newCategory)
+    const newUser = req.body
+    const service = container.resolve(CreateUserHandler)
+    const result = await service.handler(newUser)
     return res.status(201).json(result)
 
   }
   async update(req: Request, res: Response): Promise<Response> {
     const {id} = req.params
     const data = req.body
-    const service = container.resolve(UpdadeCategoryHandler)
-    const updatedCategory = await service.handler(id, data)
-    return res.status(201).json(updatedCategory)
+    const service = container.resolve(UpdateUserHandler)
+    const updatedUser = await service.handler(id, data)
+    return res.status(201).json(updatedUser)
 
   }
   async remove(req: Request, res: Response): Promise<Response> {
     const {id} = req.params
-    const service = container.resolve(RemoveCategoryHandler)
-    const isDeletedCategory = await service.handler(id)
-    return res.status(200).json(isDeletedCategory)
-
-  }
-  async findByName(req: Request, res: Response): Promise<Response> {
-    const data = req.params.name
-    const service = container.resolve(GetCategoryByNameHandler)
-    const hasCategory = await service.handler(data)
-    return res.status(200).json(hasCategory)
-
+    const service = container.resolve(RemoveUserHandler)
+    const isDeletedUser = await service.handler(id)
+    return res.status(200).json(isDeletedUser)
   }
   
 }
