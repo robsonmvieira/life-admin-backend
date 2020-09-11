@@ -1,5 +1,5 @@
 import Base from "@shared/baseEntity/entity";
-import { Entity, Column, ManyToMany, JoinColumn } from "typeorm";
+import { Entity, Column, ManyToMany, JoinColumn, JoinTable } from "typeorm";
 import Permission from "@modules/permissions/models/permission";
 import Role from "@modules/roles/models/role";
 @Entity('users')
@@ -16,11 +16,11 @@ export default class User extends Base{
   isActive: boolean
 
   @ManyToMany(() => Permission)
-  @JoinColumn()
+  @JoinTable()
   permissions: Permission[]
 
   @ManyToMany(() => Role)
-  @JoinColumn()
+  @JoinTable()
   roles: Role[]
 
 
