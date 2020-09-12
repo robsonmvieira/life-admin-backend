@@ -1,3 +1,5 @@
-export default interface CreatePermissionInput{
+export default interface CreatePermissionInput {
   name: string
+  description: string
+  slug: string
 }
