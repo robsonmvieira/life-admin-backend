@@ -1,5 +1,5 @@
-export default interface CreateRoleInput{
-  name: string,
-  slug: string,
+export default interface CreateRoleInput {
+  name: string
+  slug: string
   description: string
 }
