@@ -1,17 +1,19 @@
-import { injectable, inject } from "tsyringe";
+import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-import RoleRepository from "@infra/repositories/roleRepository";
+import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
 @injectable()
-export default class RemoveRoleHandler{
+export default class RemoveRoleHandler {
+  constructor(@inject('RoleRepository') private repo: IRoleRepository) {}
 
-  constructor(@inject("RoleRepository") private repo: RoleRepository) {}
-
-  async handler(data: string): Promise<boolean>{
-
+  async handler(data: string): Promise<boolean> {
     try {
       return await this.repo.remove(data)
     } catch (error) {
-      throw new AppError("Não foi possível deltar a Role solicitada", 400, error)
+      throw new AppError(
+        'Não foi possível deltar a Role solicitada',
+        400,
+        error
+      )
     }
   }
 }

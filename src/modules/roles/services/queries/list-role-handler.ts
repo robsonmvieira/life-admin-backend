@@ -1,19 +1,21 @@
-import { injectable, inject } from "tsyringe"
-import AppError from "@infra/errors/AppError"
-import RoleRepository from "@infra/repositories/roleRepository"
-import Role from "@modules/roles/models/role"
+import { injectable, inject } from 'tsyringe'
+import AppError from '@infra/errors/AppError'
+import Role from '@modules/roles/models/role'
+import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
 
 @injectable()
-export default class ListRolesHandler{
+export default class ListRolesHandler {
+  constructor(@inject('RoleRepository') private repo: IRoleRepository) {}
 
-  constructor(@inject("RoleRepository") private repo: RoleRepository) {}
-
-  async handler(): Promise<Role[]>{
-
+  async handler(): Promise<Role[]> {
     try {
       return await this.repo.index()
     } catch (error) {
-      throw new AppError("Um erro interno aconteceu. Tente mais tarde", 500, error)
+      throw new AppError(
+        'Um erro interno aconteceu. Tente mais tarde',
+        500,
+        error
+      )
     }
   }
 }
