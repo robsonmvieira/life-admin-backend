@@ -1,4 +1,5 @@
-import {container} from 'tsyringe'
+import { container } from 'tsyringe'
+import '@shared/dependencyInjection'
 import ICategoryRepository from '@modules/categories/interfaces/ICategoryRepository'
 import CategoryRepository from '@infra/repositories/categoryRepository'
 import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRepository'
@@ -10,8 +11,17 @@ import RoleRepository from '@infra/repositories/roleRepository'
 import IUserRepository from '@modules/users/interfaces/IRoleRepository'
 import UserRepository from '@infra/repositories/userRepository'
 
-container.registerSingleton<ICategoryRepository>("CategoryRepository", CategoryRepository)
-container.registerSingleton<IProductSaleRepository>("ProductSaleRepository", ProductSaleRepository)
-container.registerSingleton<IPermissionsRepository>("PermissionsRepository", PermissionRepository)
-container.registerSingleton<IRoleRepository>("RoleRepository", RoleRepository)
-container.registerSingleton<IUserRepository>("UserRepository", UserRepository)
+container.registerSingleton<ICategoryRepository>(
+  'CategoryRepository',
+  CategoryRepository
+)
+container.registerSingleton<IProductSaleRepository>(
+  'ProductSaleRepository',
+  ProductSaleRepository
+)
+container.registerSingleton<IPermissionsRepository>(
+  'PermissionsRepository',
+  PermissionRepository
+)
+container.registerSingleton<IRoleRepository>('RoleRepository', RoleRepository)
+container.registerSingleton<IUserRepository>('UserRepository', UserRepository)
