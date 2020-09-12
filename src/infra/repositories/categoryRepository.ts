@@ -1,48 +1,60 @@
-import ICategoryRepository from "@modules/categories/interfaces/ICategoryRepository";
-import Category from "@modules/categories/models/category";
-import CreateCategoryInput from "@modules/categories/dtos/create-category-input";
-import UpdateCategoryInput from "@modules/categories/dtos/update-category-input";
-import { Repository, getRepository } from "typeorm";
+import ICategoryRepository from '@modules/categories/interfaces/ICategoryRepository'
+import Category from '@modules/categories/models/category'
+import CreateCategoryInput from '@modules/categories/dtos/create-category-input'
+import UpdateCategoryInput from '@modules/categories/dtos/update-category-input'
+import { Repository, getRepository } from 'typeorm'
+import AppError from '@infra/errors/AppError'
 
-export default class CategoryRepository implements ICategoryRepository{
+export default class CategoryRepository implements ICategoryRepository {
   repo: Repository<Category>
   constructor() {
     this.repo = getRepository(Category)
   }
+
   async findByName(name: string): Promise<Category | undefined> {
     try {
-      const result = await this.repo.findOne({where: {name}})
+      const result = await this.repo.findOne({ where: { name } })
       return result
-      
     } catch (error) {
-      console.log(error)
+      throw new AppError(
+        'Um erro ocorreu ao tentar Buscar por Nome',
+        500,
+        error
+      )
     }
   }
-  
+
   async create(data: CreateCategoryInput): Promise<Category> {
     const result = await this.repo.save(data)
     return result
   }
+
   async one(id: string): Promise<Category | undefined> {
     const result = await this.repo.findOne(id)
     return result
   }
+
   async index(): Promise<Category[]> {
     const categories = await this.repo.find()
     return categories
   }
-  async update(id: string, data: UpdateCategoryInput): Promise<Category | undefined> {
+
+  async update(
+    id: string,
+    data: UpdateCategoryInput
+  ): Promise<Category | undefined> {
     const categoryExists = await this.repo.findOne(id)
-    if(!categoryExists){
+    if (!categoryExists) {
       return undefined
     }
     await this.repo.update(id, data)
-   
+
     return await this.repo.findOne(id)
   }
+
   async delete(id: string): Promise<boolean | undefined> {
     const data = await this.repo.delete(id)
-    if(data){
+    if (data) {
       return true
     }
     return undefined
