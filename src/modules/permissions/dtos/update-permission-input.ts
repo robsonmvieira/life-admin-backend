@@ -1,5 +1,5 @@
-export default interface UpdatePermissionInput{
+export default interface UpdatePermissionInput {
   name?: string
-  slug?: string,
+  slug?: string
   description?: string
 }
