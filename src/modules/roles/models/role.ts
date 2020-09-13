@@ -1,12 +1,11 @@
-import Base from "@shared/baseEntity/entity";
-import { Entity, Column, ManyToMany } from "typeorm";
+import Base from '@shared/baseEntity/entity'
+import { Entity, Column } from 'typeorm'
 
 @Entity('roles')
-export default class Role extends Base{
-
+export default class Role extends Base {
   @Column()
   slug: string
+
   @Column()
   description: string
-
 }
