@@ -8,8 +8,10 @@ import IPermissionsRepository from '@modules/permissions/interfaces/IPermissions
 import PermissionRepository from '@infra/repositories/permissionRepository'
 import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
 import RoleRepository from '@infra/repositories/roleRepository'
-import IUserRepository from '@modules/users/interfaces/IRoleRepository'
+import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import UserRepository from '@infra/repositories/userRepository'
+import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
+import CollaboratorRepository from '@infra/repositories/collaboratorRepository'
 
 container.registerSingleton<ICategoryRepository>(
   'CategoryRepository',
@@ -25,3 +27,7 @@ container.registerSingleton<IPermissionsRepository>(
 )
 container.registerSingleton<IRoleRepository>('RoleRepository', RoleRepository)
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository)
+container.registerSingleton<ICollaboratorRepository>(
+  'CollaboratorRepository',
+  CollaboratorRepository
+)
