@@ -1,28 +1,29 @@
-import Base from "@shared/baseEntity/entity";
-import { Entity, Column, ManyToMany, JoinColumn, JoinTable } from "typeorm";
-import Permission from "@modules/permissions/models/permission";
-import Role from "@modules/roles/models/role";
-@Entity('users')
-export default class User extends Base{
+import Base from '@shared/baseEntity/entity'
+import { Entity, Column, ManyToMany, JoinTable } from 'typeorm'
+import Permission from '@modules/permissions/models/permission'
+import Role from '@modules/roles/models/role'
+// import Collaborator from '@modules/collaborators/models/collaborator'
 
-  @Column({nullable: false})
+@Entity('users')
+export default class User extends Base {
+  @Column({ nullable: false })
   password: string
 
-  @Column({unique: true})
+  @Column({ unique: true })
   email: string
-  @Column({nullable: false, default: false})
-  isAdmin: boolean
-  @Column({nullable: false, default: true})
+
+  @Column({ nullable: false, default: true })
   isActive: boolean
 
-  @ManyToMany(() => Permission)
+  @ManyToMany(() => Permission, { eager: true })
   @JoinTable()
   permissions: Permission[]
 
-  @ManyToMany(() => Role)
+  @ManyToMany(() => Role, { eager: true })
   @JoinTable()
   roles: Role[]
 
-
-  
+  //   @OneToMany(() => Collaborator, collaborator => collaborator.user)
+  //   collaborators: Collaborator[]
+  // }
 }
