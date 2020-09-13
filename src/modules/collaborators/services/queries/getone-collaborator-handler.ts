@@ -1,8 +1,6 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
 
-import User from '@modules/users/models/user'
-import UserRepository from '@infra/repositories/userRepository'
 import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
 import Collaborator from '@modules/collaborators/models/collaborator'
 
