@@ -1,4 +1,4 @@
-import UserController from '@api/user-controller.ts'
+import UserController from '@api/user-controller'
 import { Router } from 'express'
 const userController = new UserController()
 const routes = Router()
