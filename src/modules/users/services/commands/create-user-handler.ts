@@ -6,7 +6,7 @@ import Role from '@modules/roles/models/role'
 import Permission from '@modules/permissions/models/permission'
 import IEncripter from '@shared/encrypter/implementation/encripter'
 import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
-import IUserRepository from '@modules/users/interfaces/IRoleRepository'
+import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import IPermissionsRepository from '@modules/permissions/interfaces/IPermissionsRepository'
 @injectable()
 export default class CreateUserHandler {
