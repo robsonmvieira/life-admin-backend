@@ -1,4 +1,4 @@
-import AppError from '@infra/errors/AppError'
+// import AppError from '@infra/errors/AppError'
 import FakeRoleRepository from '@infra/repositories/fakes/roleRepository'
 // import FakeRoleRepository from '@infra/repositories/fakes/roleRepository'
 import CreateRoleHandler from './create-role-handler'
@@ -17,8 +17,8 @@ describe('create role Handler', () => {
   })
 
   // it('should return error if description does not provide', async () => {
-  //   expect(
-  //     await createRole.handler({
+  //   await expect(
+  //     createRole.handler({
   //       name: 'any_name',
   //       slug: 'any-slug'
   //     })

@@ -12,6 +12,14 @@ export default class UserRepository implements IUserRepository {
     this.repo = getRepository(User)
   }
 
+  async findByEmail(email: string): Promise<User | undefined> {
+    const userExists = await this.repo.findOne({ where: { email } })
+    if (!userExists) {
+      return undefined
+    }
+    return userExists
+  }
+
   async save(data: User): Promise<User> {
     return this.repo.save(data)
   }

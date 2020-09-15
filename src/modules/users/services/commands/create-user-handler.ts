@@ -19,44 +19,32 @@ export default class CreateUserHandler {
   ) {}
 
   async handler(data: CreateUserInput): Promise<User> {
-    const permissions =
-      data.permissionsId !== undefined ? data.permissionsId.split(',') : null
+    const { roles, permissions } = data
 
-    const roles = data.rolesId !== undefined ? data.rolesId.split(',') : null
+    if (!roles && !permissions) {
+      throw new AppError(
+        'Você precisa informa ao menos perfil e uma permissão para esse Usuário',
+        400
+      )
+    }
+    const extractedRoles = roles.split(',')
+    const extractPermissions = permissions.split(',')
     data.name = data.name.trim()
     data.password = await this.encripterProvider.hashPassword(data.password)
     const foundPermissions: Permission[] = []
     const foundRoles: Role[] = []
 
-    const securityRole = '83ee47bc-6580-41ff-abce-de794887be72'
-    const securityPermission = '40420e14-dcf6-43c9-bf2e-030e8f1e0ef2'
-    // if any role doesn't not provided, set basic role
-    if (!roles) {
-      const basicRole = await this.roleRepository.one(securityRole)
-      if (basicRole) {
-        foundRoles.push(basicRole)
-      }
-    } else {
-      for (const f of roles) {
-        const foundRole = await this.roleRepository.one(f.trim())
-        if (foundRole) {
-          foundRoles.push(foundRole)
-        }
+    for (const f of extractedRoles) {
+      const role = await this.roleRepository.one(f.trim())
+      if (role) {
+        foundRoles.push(role)
       }
     }
 
-    // if any permission doesn't not provided, set basic permission
-    if (!permissions) {
-      const basicPermission = await this.permissionRepo.one(securityPermission)
-      if (basicPermission) {
-        foundPermissions.push(basicPermission)
-      }
-    } else {
-      for (const f of permissions) {
-        const foundPermission = await this.permissionRepo.one(f.trim())
-        if (foundPermission) {
-          foundPermissions.push(foundPermission)
-        }
+    for (const f of extractPermissions) {
+      const permission = await this.permissionRepo.one(f.trim())
+      if (permission) {
+        foundPermissions.push(permission)
       }
     }
 

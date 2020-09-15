@@ -1,6 +1,5 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-import User from '@modules/users/models/user'
 import Role from '@modules/roles/models/role'
 import Permission from '@modules/permissions/models/permission'
 import IEncripter from '@shared/encrypter/implementation/encripter'
@@ -9,6 +8,7 @@ import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import IPermissionsRepository from '@modules/permissions/interfaces/IPermissionsRepository'
 import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
 import CreateCollaboratorInput from '@modules/collaborators/dtos/create-collaborator-input'
+import Collaborator from '@modules/collaborators/models/collaborator'
 @injectable()
 export default class CreateCollaboratorHandler {
   constructor(
@@ -22,45 +22,33 @@ export default class CreateCollaboratorHandler {
     @inject('HashPassword') private encripterProvider: IEncripter
   ) {}
 
-  async handler(data: CreateCollaboratorInput): Promise<User> {
-    const permissions =
-      data.permissionsId !== undefined ? data.permissionsId.split(',') : null
+  async handler(data: CreateCollaboratorInput): Promise<Collaborator> {
+    const { roles, permissions } = data
 
-    const roles = data.rolesId !== undefined ? data.rolesId.split(',') : null
+    if (!roles && !permissions) {
+      throw new AppError(
+        'Você precisa informa ao menos perfil e uma permissão para esse Colaborador',
+        400
+      )
+    }
+    const extractedRoles = roles.split(',')
+    const extractPermissions = permissions.split(',')
     data.name = data.name.trim()
     data.password = await this.encripterProvider.hashPassword(data.password)
     const foundPermissions: Permission[] = []
     const foundRoles: Role[] = []
 
-    const securityRole = '83ee47bc-6580-41ff-abce-de794887be72'
-    const securityPermission = '40420e14-dcf6-43c9-bf2e-030e8f1e0ef2'
-    // if any role doesn't not provided, set basic role
-    if (!roles) {
-      const basicRole = await this.roleRepository.one(securityRole)
-      if (basicRole) {
-        foundRoles.push(basicRole)
-      }
-    } else {
-      for (const f of roles) {
-        const foundRole = await this.roleRepository.one(f.trim())
-        if (foundRole) {
-          foundRoles.push(foundRole)
-        }
+    for (const f of extractedRoles) {
+      const role = await this.roleRepository.one(f.trim())
+      if (role) {
+        foundRoles.push(role)
       }
     }
 
-    // if any permission doesn't not provided, set basic permission
-    if (!permissions) {
-      const basicPermission = await this.permissionRepo.one(securityPermission)
-      if (basicPermission) {
-        foundPermissions.push(basicPermission)
-      }
-    } else {
-      for (const f of permissions) {
-        const foundPermission = await this.permissionRepo.one(f.trim())
-        if (foundPermission) {
-          foundPermissions.push(foundPermission)
-        }
+    for (const f of extractPermissions) {
+      const permission = await this.permissionRepo.one(f.trim())
+      if (permission) {
+        foundPermissions.push(permission)
       }
     }
 
@@ -76,7 +64,6 @@ export default class CreateCollaboratorHandler {
       savedCollaborator.roles = foundRoles.map(r => r)
       savedCollaborator.permissions = foundPermissions.map(p => p)
       savedCollaborator.user = owner
-      // owner.collaborators.push(savedCollaborator)
       return await this.repo.save(savedCollaborator)
     } catch (error) {
       throw new AppError('Os dados da Novo user estão incorretos', 400, error)
