@@ -7,6 +7,7 @@ import userRoutes from './user-router'
 import permissionRoutes from './permission-router'
 import rolesRoutes from './role-router'
 import collaboratorRoutes from './collaborator-router'
+import sessionRouter from './sessions-route'
 const routes = Router()
 
 routes.use('/categories', categoryRoutes)
@@ -17,5 +18,6 @@ routes.use('/sales', saleRoutes)
 routes.use('/permissions', permissionRoutes)
 routes.use('/roles', rolesRoutes)
 routes.use('/collaborators', collaboratorRoutes)
+routes.use('/sessions', sessionRouter)
 
 export default routes
