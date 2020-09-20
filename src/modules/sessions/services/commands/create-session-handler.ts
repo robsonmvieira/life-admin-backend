@@ -19,7 +19,7 @@ export default class MakeLoginHandler {
       throw new AppError('Email ou senha incorretos', 401)
     }
 
-    const passwordMatched = this.encripterProvider.comparePassword(
+    const passwordMatched = await this.encripterProvider.comparePassword(
       data.password,
       userExists.password
     )
