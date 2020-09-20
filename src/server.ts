@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import 'dotenv/config'
 import './infra/database/connection'
 import './infra/container'
 import express, { Request, Response, NextFunction } from 'express'
