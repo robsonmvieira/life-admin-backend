@@ -1,4 +1,4 @@
-import SaleController from '@api/sale-controller.ts'
+import SaleController from '@api/sale-controller'
 import { Router } from 'express'
 const sale = new SaleController()
 const routes = Router()

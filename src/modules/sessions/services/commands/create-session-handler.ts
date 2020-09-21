@@ -4,7 +4,6 @@ import IEncripter from '@shared/encrypter/implementation/encripter'
 import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import MakeLoginInput from '@modules/sessions/dtos/login-input'
 import ITokenGenerator from '@shared/generateToken/interfaces/ItokenGenerator'
-import enviromment from 'enviromments/enviromment'
 @injectable()
 export default class MakeLoginHandler {
   constructor(
@@ -19,20 +18,21 @@ export default class MakeLoginHandler {
       throw new AppError('Email ou senha incorretos', 401)
     }
 
-    const passwordMatched = this.encripterProvider.comparePassword(
+    const passwordMatched = await this.encripterProvider.comparePassword(
       data.password,
       userExists.password
     )
-
+    const secret = `${process.env.APP_SECRET}`
+    const expiresIn = `${process.env.APP_EXESPIRE_IN}`
     if (!passwordMatched) {
       throw new AppError('Email ou senha incorretos', 401)
     }
     const token = await this.tokenGenerator.generateToken(
       { isActive: userExists.isActive },
-      enviromment.auth.secret,
+      secret,
       {
         subject: userExists.id,
-        expiresIn: enviromment.auth.exespireIn
+        expiresIn
       }
     )
     return token

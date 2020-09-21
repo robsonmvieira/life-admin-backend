@@ -6,26 +6,29 @@ import RemoveCollaboratorHandler from '@modules/collaborators/services/commands/
 import UpdateCollaboratorHandler from '@modules/collaborators/services/commands/update-collaborator-handler'
 import GetOneCollaboratorHandler from '@modules/collaborators/services/queries/getone-collaborator-handler'
 import ListCollaboratorsHandler from '@modules/collaborators/services/queries/list-collaborators-handler'
-
+import { classToClass } from 'class-transformer'
 export default class CollaboratorController implements ControllerBase {
   async index(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(ListCollaboratorsHandler)
     const Collaborators = await service.handler()
-    return res.status(200).json(Collaborators)
+    return res.status(200).json(classToClass(Collaborators))
   }
 
   async one(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
     const service = container.resolve(GetOneCollaboratorHandler)
     const hasCollaborator = await service.handler(id)
-    return res.status(200).json(hasCollaborator)
+    if (!hasCollaborator) {
+      return res.status(200).json(hasCollaborator)
+    }
+    return res.status(200).json(classToClass(hasCollaborator))
   }
 
   async create(req: Request, res: Response): Promise<Response> {
     const newCollaborator = req.body
     const service = container.resolve(CreateCollaboratorHandler)
     const result = await service.handler(newCollaborator)
-    return res.status(201).json(result)
+    return res.status(201).json(classToClass(result))
   }
 
   async update(req: Request, res: Response): Promise<Response> {

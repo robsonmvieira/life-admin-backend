@@ -4,6 +4,7 @@
     "module": "commonjs",
        "outDir": "./dist",
        "rootDir": "./src",
+       "composite": true,
     "strict": true,
     "strictPropertyInitialization": false,
      "baseUrl": "./src",
@@ -15,6 +16,7 @@
 
      },
     "esModuleInterop": true,
+    "allowJs": true,
      "experimentalDecorators": true,
      "emitDecoratorMetadata": true,
     "skipLibCheck": true,
