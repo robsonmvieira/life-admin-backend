@@ -6,6 +6,7 @@ export default interface ICollaboratorRepository {
   create(data: CreateCollaboratorInput): Promise<Collaborator>
   index(): Promise<Collaborator[]>
   one(id: string): Promise<Collaborator | undefined>
+  findByEmail(email: string): Promise<Collaborator | undefined>
   update(
     id: string,
     data: UpdateCollaboratorInput
