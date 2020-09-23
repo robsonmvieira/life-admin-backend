@@ -1,9 +1,10 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-import IUserRepository from '@modules/users/interfaces/IUserRepository'
+import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
+
 @injectable()
-export default class RemoveUserHandler {
-  constructor(@inject('UserRepository') private repo: IUserRepository) {}
+export default class RemoveOwnerHandler {
+  constructor(@inject('OwnerRepository') private repo: IOwnerRepository) {}
 
   async handler(data: string): Promise<boolean> {
     try {

@@ -1,24 +1,24 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-import CreateUserInput from '@modules/users/dtos/create-user-input'
-import User from '@modules/users/models/user'
 import Role from '@modules/roles/models/role'
 import Permission from '@modules/permissions/models/permission'
 import IEncripter from '@shared/encrypter/implementation/encripter'
 import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
-import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import IPermissionsRepository from '@modules/permissions/interfaces/IPermissionsRepository'
+import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
+import CreateOwnerInput from '@modules/owner/dtos/create-owner-input'
+import Owner from '@modules/owner/models/owner'
 @injectable()
-export default class CreateUserHandler {
+export default class CreateOwnerHandler {
   constructor(
-    @inject('UserRepository') private repo: IUserRepository,
+    @inject('OwnerRepository') private repo: IOwnerRepository,
     @inject('PermissionsRepository')
     private permissionRepo: IPermissionsRepository,
     @inject('RoleRepository') private roleRepository: IRoleRepository,
     @inject('HashPassword') private encripterProvider: IEncripter
   ) {}
 
-  async handler(data: CreateUserInput): Promise<User> {
+  async handler(data: CreateOwnerInput): Promise<Owner> {
     const { roles, permissions } = data
 
     if (!roles && !permissions) {
@@ -49,10 +49,19 @@ export default class CreateUserHandler {
     }
 
     try {
-      const savedUser = await this.repo.create(data)
-      savedUser.roles = foundRoles.map(r => r)
-      savedUser.permissions = foundPermissions.map(p => p)
-      return await this.repo.save(savedUser)
+      const owner = {
+        name: data.name,
+        password: data.password,
+        email: data.email,
+        isAdmin: data.isAdmin,
+        isActive: data.isActive,
+        roles: [],
+        permissions: []
+      }
+      const savedOwner = await this.repo.create(owner)
+      savedOwner.roles = foundRoles.map(r => r)
+      savedOwner.permissions = foundPermissions.map(p => p)
+      return await this.repo.save(savedOwner)
     } catch (error) {
       throw new AppError('Os dados da Novo user estão incorretos', 400, error)
     }

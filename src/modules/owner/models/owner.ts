@@ -5,8 +5,8 @@ import Role from '@modules/roles/models/role'
 // import Collaborator from '@modules/collaborators/models/collaborator'
 import { Exclude } from 'class-transformer'
 import ProductSale from '@modules/products/models/product'
-@Entity('users')
-export default class User extends Base {
+@Entity('owners')
+export default class Owner extends Base {
   @Column({ nullable: false })
   @Exclude()
   password: string

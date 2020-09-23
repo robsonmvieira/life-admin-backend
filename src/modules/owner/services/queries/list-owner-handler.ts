@@ -1,13 +1,12 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-import User from '@modules/users/models/user'
-import IUserRepository from '@modules/users/interfaces/IUserRepository'
+import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
+import Owner from '@modules/owner/models/owner'
 
 @injectable()
-export default class ListUsersHandler {
-  constructor(@inject('UserRepository') private repo: IUserRepository) {}
-
-  async handler(): Promise<User[]> {
+export default class ListOwnerHandler {
+  constructor(@inject('OwnerRepository') private repo: IOwnerRepository) {}
+  async handler(): Promise<Owner[]> {
     try {
       const users = await this.repo.index()
       return users

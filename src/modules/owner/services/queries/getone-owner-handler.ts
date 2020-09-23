@@ -1,14 +1,13 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-
-import User from '@modules/users/models/user'
-import IUserRepository from '@modules/users/interfaces/IUserRepository'
+import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
+import Owner from '@modules/owner/models/owner'
 
 @injectable()
-export default class GetOneUserHandler {
-  constructor(@inject('UserRepository') private repo: IUserRepository) {}
+export default class GetOneOwnerHandler {
+  constructor(@inject('OwnerRepository') private repo: IOwnerRepository) {}
 
-  async handler(id: string): Promise<User | undefined> {
+  async handler(id: string): Promise<Owner | undefined> {
     try {
       return await this.repo.one(id)
     } catch (error) {
