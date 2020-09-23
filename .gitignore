@@ -8,3 +8,4 @@ test/*.log
 enviromments
 .env
 ormconfig.json
+dist
