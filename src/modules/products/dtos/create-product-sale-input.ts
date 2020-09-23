@@ -1,4 +1,5 @@
-export default interface CreateProductSaleInput{
+export default interface CreateProductSaleInput {
+  owner_id: string
   sku: string
   name: string
   quantity: number
