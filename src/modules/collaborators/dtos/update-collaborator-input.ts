@@ -1,7 +1,9 @@
+import Role from '@modules/roles/models/role'
+
 export default interface UpdateCollaboratorInput {
   password?: string
   email?: string
   position?: string
-  roles?: string
-  permissions?: string
+  roles?: Role[]
+  permissions?: Permissions[]
 }

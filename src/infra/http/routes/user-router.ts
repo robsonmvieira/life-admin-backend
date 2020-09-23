@@ -1,9 +1,12 @@
 import UserController from '@api/user-controller'
 import { Router } from 'express'
 import authenticated from '../../../shared/middlewares/auth'
+import checkRoleMiddleware from '../../../shared/middlewares/check-roles'
 const userController = new UserController()
 const routes = Router()
 routes.use(authenticated)
+routes.use(checkRoleMiddleware)
+
 routes.get('/', userController.index)
 routes.get('/:id', userController.one)
 routes.post('/', userController.create)

@@ -2,14 +2,22 @@ import { Repository, getRepository } from 'typeorm'
 
 import Collaborator from '@modules/collaborators/models/collaborator'
 import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
-import CreateCollaboratorInput from '@modules/collaborators/dtos/create-collaborator-input'
 import UpdateCollaboratorInput from '@modules/collaborators/dtos/update-collaborator-input'
+import CreateCollaboratorInput from '@modules/collaborators/dtos/create-collaborator-input'
 
 export default class CollaboratorRepository implements ICollaboratorRepository {
   repo: Repository<Collaborator>
 
   constructor() {
     this.repo = getRepository(Collaborator)
+  }
+
+  async findByEmail(email: string): Promise<Collaborator | undefined> {
+    const collaboratorExists = await this.repo.findOne({ where: { email } })
+    if (!collaboratorExists) {
+      return undefined
+    }
+    return collaboratorExists
   }
 
   async save(data: Collaborator): Promise<Collaborator> {
