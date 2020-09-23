@@ -1,9 +1,10 @@
 import { Repository, getRepository } from 'typeorm'
 
 import Collaborator from '@modules/collaborators/models/collaborator'
-import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
+import ICollaboratorRepository, {
+  createCollaborator
+} from '@modules/collaborators/interfaces/ICollaboratorRepository'
 import UpdateCollaboratorInput from '@modules/collaborators/dtos/update-collaborator-input'
-import CreateCollaboratorInput from '@modules/collaborators/dtos/create-collaborator-input'
 
 export default class CollaboratorRepository implements ICollaboratorRepository {
   repo: Repository<Collaborator>
@@ -24,12 +25,12 @@ export default class CollaboratorRepository implements ICollaboratorRepository {
     return this.repo.save(data)
   }
 
-  async create(data: CreateCollaboratorInput): Promise<Collaborator> {
+  async create(data: createCollaborator): Promise<Collaborator> {
     return await this.repo.save(data)
   }
 
   async index(): Promise<Collaborator[]> {
-    return await this.repo.find({ relations: ['user'] })
+    return await this.repo.find({ relations: ['owner'] })
   }
 
   async one(id: string): Promise<Collaborator | undefined> {

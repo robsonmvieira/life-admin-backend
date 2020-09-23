@@ -1,6 +1,6 @@
+import Owner from '@modules/owner/models/owner'
 import Permission from '@modules/permissions/models/permission'
 import Role from '@modules/roles/models/role'
-import User from '@modules/users/models/user'
 import Base from '@shared/baseEntity/entity'
 import {
   Column,
@@ -37,9 +37,9 @@ export default class Collaborator extends Base {
   roles: Role[]
 
   @Column({ nullable: false })
-  company_id: string
+  owner_id: string
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'users_id' })
-  user: User
+  @ManyToOne(() => Owner)
+  @JoinColumn({ name: 'owners_id' })
+  owner: Owner
 }

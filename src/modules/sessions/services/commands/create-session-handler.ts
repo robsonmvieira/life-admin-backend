@@ -1,14 +1,14 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
 import IEncripter from '@shared/encrypter/implementation/encripter'
-import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import MakeLoginInput from '@modules/sessions/dtos/login-input'
 import ITokenGenerator from '@shared/generateToken/interfaces/ItokenGenerator'
 import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
+import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
 @injectable()
 export default class MakeLoginHandler {
   constructor(
-    @inject('UserRepository') private repo: IUserRepository,
+    @inject('OwnerRepository') private repo: IOwnerRepository,
     @inject('CollaboratorRepository')
     private collaboratorRepository: ICollaboratorRepository,
     @inject('HashPassword') private encripterProvider: IEncripter,
@@ -16,18 +16,18 @@ export default class MakeLoginHandler {
   ) {}
 
   async handler(data: MakeLoginInput): Promise<string | undefined> {
-    const userExists = await this.repo.findByEmail(data.email)
+    const ownerExists = await this.repo.findByEmail(data.email)
     const collaboratorExists = await this.collaboratorRepository.findByEmail(
       data.email
     )
 
-    if (!userExists && !collaboratorExists) {
+    if (!ownerExists && !collaboratorExists) {
       throw new AppError('Email ou senha incorretos', 401)
     }
-    if (userExists) {
+    if (ownerExists) {
       const passwordMatched = await this.encripterProvider.comparePassword(
         data.password,
-        userExists.password
+        ownerExists.password
       )
       const secret = `${process.env.APP_SECRET}`
       const expiresIn = `${process.env.APP_EXESPIRE_IN}`
@@ -35,10 +35,10 @@ export default class MakeLoginHandler {
         throw new AppError('Email ou senha incorretos', 401)
       }
       const token = await this.tokenGenerator.generateToken(
-        { isActive: userExists.isActive },
+        { isActive: ownerExists.isActive },
         secret,
         {
-          subject: userExists.id,
+          subject: ownerExists.id,
           expiresIn
         }
       )

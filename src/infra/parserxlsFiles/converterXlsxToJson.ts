@@ -18,6 +18,7 @@ export default class XlsxToJsonParser {
       'tabela-herba.xlsx'
     )
     const workeBook = xlsx.readFile(filePath)
+
     const tabList = workeBook.SheetNames
     let data: CreateProductSaleInput = {
       owner_id: '',
@@ -34,9 +35,7 @@ export default class XlsxToJsonParser {
       more_than_four_thousand: 0
     }
     const tabs = tabList.map((t, index) => workeBook.Sheets[tabList[index]])
-
     const tabsToJson: any[] = tabs.map(t => xlsx.utils.sheet_to_json(t))
-
     const addProductHandler = container.resolve(CreateProductSalerHandler)
     for (const tabs of tabsToJson) {
       for (const tab of tabs) {
@@ -63,6 +62,7 @@ export default class XlsxToJsonParser {
             from_one_thousand_to_three_thousand_nine_hundred_ninety_nine: 0,
             more_than_four_thousand: 0
           }
+
           await addProductHandler.handler(data)
         }
       }

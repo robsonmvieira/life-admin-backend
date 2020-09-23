@@ -1,19 +1,19 @@
 import Base from '@shared/baseEntity/entity'
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm'
 import Category from '@modules/categories/models/category'
-import User from '@modules/users/models/user'
+import Owner from '@modules/owner/models/owner'
 
-@Entity('products_sale')
+@Entity('products_pdv_sale')
 export default class ProductSale extends Base {
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   sku: string
 
   @Column()
   owner_id: string
 
-  @ManyToOne(() => User, user => user.products)
+  @ManyToOne(() => Owner, owner => owner.products)
   @JoinColumn()
-  user: User
+  owner: Owner
 
   @Column({ nullable: false, default: 0 })
   quantity: number

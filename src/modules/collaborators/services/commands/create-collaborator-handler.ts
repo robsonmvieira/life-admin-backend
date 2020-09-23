@@ -4,15 +4,15 @@ import Role from '@modules/roles/models/role'
 import Permission from '@modules/permissions/models/permission'
 import IEncripter from '@shared/encrypter/implementation/encripter'
 import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
-import IUserRepository from '@modules/users/interfaces/IUserRepository'
 import IPermissionsRepository from '@modules/permissions/interfaces/IPermissionsRepository'
 import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollaboratorRepository'
 import CreateCollaboratorInput from '@modules/collaborators/dtos/create-collaborator-input'
 import Collaborator from '@modules/collaborators/models/collaborator'
+import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
 @injectable()
 export default class CreateCollaboratorHandler {
   constructor(
-    @inject('UserRepository') private userRepository: IUserRepository,
+    @inject('OwnerRepository') private ownerRepository: IOwnerRepository,
     @inject('PermissionsRepository')
     private permissionRepo: IPermissionsRepository,
     @inject('RoleRepository') private roleRepository: IRoleRepository,
@@ -52,18 +52,28 @@ export default class CreateCollaboratorHandler {
       }
     }
 
-    const owner = await this.userRepository.one(data.company_id)
+    const owner = await this.ownerRepository.one(data.owner_id)
     if (!owner) {
       throw new AppError(
-        'você não é possivel criar um colaborador sem um associado',
+        'você não pode criar um colaborador sem um associado',
         400
       )
     }
     try {
-      const savedCollaborator = await this.repo.create(data)
+      const collaborator = {
+        name: data.name,
+        password: data.password,
+        email: data.email,
+        isActive: data.isActive,
+        owner_id: data.owner_id,
+        position: data.position,
+        roles: [],
+        permissions: []
+      }
+      const savedCollaborator = await this.repo.create(collaborator)
       savedCollaborator.roles = foundRoles.map(r => r)
       savedCollaborator.permissions = foundPermissions.map(p => p)
-      savedCollaborator.user = owner
+      savedCollaborator.owner = owner
       return await this.repo.save(savedCollaborator)
     } catch (error) {
       throw new AppError('Os dados da Novo user estão incorretos', 400, error)

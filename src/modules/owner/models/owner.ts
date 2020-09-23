@@ -25,7 +25,7 @@ export default class Owner extends Base {
   @JoinTable()
   roles: Role[]
 
-  @OneToMany(() => ProductSale, product => product.user)
+  @OneToMany(() => ProductSale, product => product.owner)
   products: ProductSale[]
 
   //   @OneToMany(() => Collaborator, collaborator => collaborator.user)
