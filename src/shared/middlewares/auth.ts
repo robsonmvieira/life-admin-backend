@@ -1,5 +1,4 @@
 import AppError from '@infra/errors/AppError'
-import enviromment from 'enviromments/enviromment'
 import { NextFunction, Request, Response } from 'express'
 import { verify } from 'jsonwebtoken'
 export interface ShapePayload {
@@ -20,8 +19,9 @@ export default function guard(
     throw new AppError('Token Not Provider', 401)
   }
   const [, token] = authHeader.split(' ')
+  const secret = `${process.env.APP_SECRET}`
   try {
-    const decoded = verify(token, enviromment.auth.secret)
+    const decoded = verify(token, secret)
     const { sub, isActive } = decoded as ShapePayload
     req.entity = {
       id: sub,
