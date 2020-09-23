@@ -1,9 +1,10 @@
 import Base from '@shared/baseEntity/entity'
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm'
+import { Entity, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm'
 import Permission from '@modules/permissions/models/permission'
 import Role from '@modules/roles/models/role'
 // import Collaborator from '@modules/collaborators/models/collaborator'
 import { Exclude } from 'class-transformer'
+import ProductSale from '@modules/products/models/product'
 @Entity('users')
 export default class User extends Base {
   @Column({ nullable: false })
@@ -23,6 +24,9 @@ export default class User extends Base {
   @ManyToMany(() => Role, { eager: true })
   @JoinTable()
   roles: Role[]
+
+  @OneToMany(() => ProductSale, product => product.user)
+  products: ProductSale[]
 
   //   @OneToMany(() => Collaborator, collaborator => collaborator.user)
   //   collaborators: Collaborator[]
