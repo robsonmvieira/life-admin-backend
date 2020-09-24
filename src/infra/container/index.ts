@@ -12,6 +12,8 @@ import ICollaboratorRepository from '@modules/collaborators/interfaces/ICollabor
 import CollaboratorRepository from '@infra/repositories/collaboratorRepository'
 import IOwnerRepository from '@modules/owner/interfaces/IOwnerRepository'
 import OwnerRepository from '@infra/repositories/ownerRepository'
+import ISalesPDVRepository from '@modules/sales/interfaces/ISalesPDVRepository'
+import SalesPDVRepository from '@infra/repositories/salesRepository'
 
 container.registerSingleton<ICategoryRepository>(
   'CategoryRepository',
@@ -33,4 +35,9 @@ container.registerSingleton<IOwnerRepository>(
 container.registerSingleton<ICollaboratorRepository>(
   'CollaboratorRepository',
   CollaboratorRepository
+)
+
+container.registerSingleton<ISalesPDVRepository>(
+  'SalesPDVRepository',
+  SalesPDVRepository
 )
