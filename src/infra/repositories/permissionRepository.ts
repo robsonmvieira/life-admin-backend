@@ -16,7 +16,7 @@ export default class PermissionRepository implements IPermissionsRepository {
   }
 
   async index(): Promise<Permission[]> {
-    return await this.repo.find({ select: ['name', 'slug', 'description'] })
+    return await this.repo.find()
   }
 
   async one(id: string): Promise<Permission | undefined> {

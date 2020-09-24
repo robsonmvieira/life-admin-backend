@@ -37,7 +37,7 @@ export default class OwnerController implements ControllerBase {
     const data = req.body
     const service = container.resolve(UpdateOwnerHandler)
     const updatedOwner = await service.handler(id, data)
-    return res.status(201).json(updatedOwner)
+    return res.status(201).json(classToClass(updatedOwner))
   }
 
   async remove(req: Request, res: Response): Promise<Response> {

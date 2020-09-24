@@ -4,8 +4,8 @@ import authenticated from '../../../shared/middlewares/auth'
 import checkRoleMiddleware from '../../../shared/middlewares/check-roles'
 const userController = new OwnerController()
 const routes = Router()
-routes.use(authenticated)
-routes.use(checkRoleMiddleware)
+// routes.use(authenticated)
+// routes.use(checkRoleMiddleware)
 
 routes.get('/', userController.index)
 routes.get('/:id', userController.one)

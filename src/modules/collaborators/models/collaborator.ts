@@ -2,6 +2,7 @@ import Owner from '@modules/owner/models/owner'
 import Permission from '@modules/permissions/models/permission'
 import Role from '@modules/roles/models/role'
 import Base from '@shared/baseEntity/entity'
+import { Exclude } from 'class-transformer'
 import {
   Column,
   Entity,
@@ -14,12 +15,14 @@ import {
 @Entity('collaborators')
 export default class Collaborator extends Base {
   @Column({ nullable: false })
+  @Exclude()
   password: string
 
   @Column({ unique: true })
   email: string
 
   @Column({ nullable: false })
+  @Exclude()
   cpf: string
 
   @Column({ nullable: false })

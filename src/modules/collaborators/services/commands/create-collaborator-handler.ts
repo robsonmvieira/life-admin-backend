@@ -64,6 +64,7 @@ export default class CreateCollaboratorHandler {
         name: data.name,
         password: data.password,
         email: data.email,
+        cpf: data.cpf,
         isActive: data.isActive,
         owner_id: data.owner_id,
         position: data.position,
