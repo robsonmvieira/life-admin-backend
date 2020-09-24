@@ -1,13 +1,16 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import ProductSaleController from '@api/product-sale-controller'
+import authenticated from '../../../shared/middlewares/auth'
+import checkRoleMiddleware from '../../../shared/middlewares/check-roles'
+import checkListProductPermission from '@shared/middlewares/check-list-product'
+const productController = new ProductSaleController()
 const routes = Router()
-
-const categoryCtr = new ProductSaleController()
-
-routes.get('/', categoryCtr.index)
-routes.get('/:id', categoryCtr.one)
-routes.post('/', categoryCtr.create)
-routes.put('/:id', categoryCtr.update)
-routes.delete('/:id', categoryCtr.remove)
+routes.use(authenticated)
+// routes.use(checkRoleMiddleware)
+routes.get('/', [checkListProductPermission], productController.index)
+routes.get('/:id', productController.one)
+routes.post('/', productController.create)
+routes.put('/:id', productController.update)
+routes.delete('/:id', productController.remove)
 
 export default routes
