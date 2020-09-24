@@ -9,8 +9,9 @@ import GetOneProductHandler from '@modules/products/services/queries/getone-prod
 import { classToClass } from 'class-transformer'
 export default class ProductSaleController implements ControllerBase {
   async index(req: Request, res: Response): Promise<Response> {
+    const { pages } = req.query
     const service = container.resolve(ListProductSaleHandler)
-    const products = await service.handler()
+    const products = await service.handler(Number(pages))
     return res.status(200).json(classToClass(products))
   }
 
