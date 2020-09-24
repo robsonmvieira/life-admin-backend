@@ -34,7 +34,7 @@ export default class CollaboratorRepository implements ICollaboratorRepository {
   }
 
   async one(id: string): Promise<Collaborator | undefined> {
-    return await this.repo.findOne(id)
+    return await this.repo.findOne(id, { relations: ['roles', 'permissions'] })
   }
 
   async update(
