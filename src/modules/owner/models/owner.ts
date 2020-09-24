@@ -11,6 +11,9 @@ export default class Owner extends Base {
   @Exclude()
   password: string
 
+  @Column({ nullable: false })
+  name: string
+
   @Column({ unique: true })
   email: string
 
