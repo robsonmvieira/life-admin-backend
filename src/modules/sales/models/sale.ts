@@ -31,5 +31,5 @@ export default class SalesPDV extends Base {
   collaborator?: Collaborator
 
   @OneToMany(() => ProductSale, product => product.sales)
-  productsPDV: ProductSale
+  productsPDV: ProductSale[]
 }

@@ -1,5 +1,5 @@
 import Base from '@shared/baseEntity/entity'
-import { Column, Entity, ManyToOne, JoinColumn, ManyToMany } from 'typeorm'
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm'
 import Category from '@modules/categories/models/category'
 import Owner from '@modules/owner/models/owner'
 import SalesPDV from '@modules/sales/models/sale'
