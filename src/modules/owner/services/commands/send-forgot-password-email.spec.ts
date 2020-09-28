@@ -1,4 +1,4 @@
-import FakeUserRepository from '@infra/repositories/fakes/fakeUserRepository'
+import FakeUserRepository from '@infra/repositories/fakes/fakeOwnerRepository'
 import SendForgotPasswordEmail from './send-forgot-password-email'
 import FakeEmail from '@shared/mail/fakes/fakeMail.ts'
 import AppError from '@infra/errors/AppError'
