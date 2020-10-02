@@ -9,5 +9,7 @@ export default class ListSalesPDVHandler {
     private salesPDVRepository: ISalesPDVRepository
   ) {}
 
-  // async handler(id: string): Promise<SalesPDV[]>
+  async handler(id: string): Promise<SalesPDV[]> {
+    return this.salesPDVRepository.index(id)
+  }
 }
