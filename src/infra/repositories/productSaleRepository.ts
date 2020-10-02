@@ -22,8 +22,7 @@ export default class ProductSaleRepository implements IProductSaleRepository {
 
   async index(itemPerPage: number): Promise<ProductSale[]> {
     const quantityPerPage = itemPerPage * 10
-    console.log(quantityPerPage)
-    return await this.repo.find({ skip: itemPerPage, take: 10 })
+    return await this.repo.find({ skip: quantityPerPage, take: 10 })
   }
 
   async one(id: string): Promise<ProductSale | undefined> {
