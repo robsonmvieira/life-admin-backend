@@ -9,6 +9,9 @@ export default class ProductSale extends Base {
   @Column({ nullable: false })
   sku: string
 
+  @Column({ nullable: false })
+  name: string
+
   @Column()
   owner_id: string
 
