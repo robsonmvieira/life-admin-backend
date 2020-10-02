@@ -18,6 +18,9 @@ export default class Collaborator extends Base {
   @Exclude()
   password: string
 
+  @Column({ nullable: false })
+  name: string
+
   @Column({ unique: true })
   email: string
 

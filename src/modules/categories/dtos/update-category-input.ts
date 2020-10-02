@@ -1,3 +1,3 @@
-export default interface UpdateCategoryInput { 
+export default interface UpdateCategoryInput {
   name: string
 }

@@ -11,6 +11,7 @@ import AppError from '@infra/errors/AppError'
 const app = express()
 app.use(express.json())
 app.use(cors())
+// app.use(express.urlencoded({ type: 'multipart/form-data' }))
 app.use(routes)
 
 app.use(

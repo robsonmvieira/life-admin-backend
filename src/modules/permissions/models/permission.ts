@@ -6,6 +6,9 @@ export default class Permission extends Base {
   @Column()
   slug: string
 
+  @Column({ nullable: false })
+  name: string
+
   @Column()
   description: string
 }
