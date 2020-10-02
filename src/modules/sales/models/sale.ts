@@ -1,35 +1,37 @@
 import Collaborator from '@modules/collaborators/models/collaborator'
+import ItemSalesPDV from '@modules/itemSalesPDV/models/itemSalesPDV'
 import Owner from '@modules/owner/models/owner'
-import ProductSale from '@modules/products/models/product'
 import Base from '@shared/baseEntity/entity'
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm'
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm'
 
-@Entity('sales_PDV')
+@Entity('sales_pdv')
 export default class SalesPDV extends Base {
-  @Column()
+  @Column({ nullable: true })
   collaborator_id?: string
 
   @Column()
   type_of_payment: string
 
-  @Column()
-  sub_total: string
+  @Column({ nullable: true })
+  sub_total?: string
 
-  @Column({ default: 0 })
-  descount: number
+  @Column({ default: 0, nullable: true })
+  descount?: number
 
-  @Column()
-  total: string
+  @Column({ nullable: true })
+  total?: string
 
-  @Column()
+  @Column({ nullable: true })
   owner_id?: string
 
-  @OneToOne(() => Owner)
+  @OneToOne(() => Owner, { nullable: true })
+  @JoinColumn()
   owner?: Owner
 
-  @OneToOne(() => Collaborator)
+  @OneToOne(() => Collaborator, { nullable: true })
+  @JoinColumn()
   collaborator?: Collaborator
 
-  @OneToMany(() => ProductSale, product => product.sales)
-  productsPDV: ProductSale[]
+  @OneToMany(() => ItemSalesPDV, item => item.salesPDV)
+  productsPDV?: ItemSalesPDV[]
 }
