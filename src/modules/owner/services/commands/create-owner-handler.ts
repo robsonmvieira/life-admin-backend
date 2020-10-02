@@ -61,6 +61,7 @@ export default class CreateOwnerHandler {
       const savedOwner = await this.repo.create(owner)
       savedOwner.roles = foundRoles.map(r => r)
       savedOwner.permissions = foundPermissions.map(p => p)
+
       return await this.repo.save(savedOwner)
     } catch (error) {
       throw new AppError('Os dados da Novo user estão incorretos', 400, error)
