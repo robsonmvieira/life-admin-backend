@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe'
 import AppError from '@infra/errors/AppError'
-import Role from '@modules/roles/models/role'
 import IRoleRepository from '@modules/roles/interfaces/IRoleRepository'
+import Role from '@modules/roles/models/role'
 
 @injectable()
 export default class ListRolesHandler {
