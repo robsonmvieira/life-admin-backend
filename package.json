@@ -6,9 +6,10 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir  dist --copy-files",
     "dev": "ts-node-dev --inspect -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/server.ts",
-    "start": "ts-node-deve --inspect -r tsconfig-paths/register src/index",
+    "run": "ts-node-dev --inspect -r tsconfig-paths/register src/index",
     "typeorm": "ts-node-dev --inspect -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "test": "jest"
+    "test": "jest",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.7",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.13",
     "@types/jsonwebtoken": "^8.5.0",
