@@ -25,13 +25,14 @@ jobs:
         uses: actions/setup-node@v2.1.2
         with: 
           node-version: 12.x
-      
+      # instala as dependencias NPM/YARN
       - name: Install dependencies
         run: yarn
-      
+      # Executa o build
       - name: run build
         run: yarn build
-      
+        
+      # copia o código para a DO
       - name: copy dist to Digital Ocean
         uses: appleboy/scp-action@master
         with:
@@ -42,3 +43,36 @@ jobs:
           source: ".,!node_modules"
           target: "~/app/life-admin-backend"
       
+      # instala as dependencias na DO
+      - name: install dependencies on Digital Ocean
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}  
+          script: |
+              cd ~/app/life-admin-backend
+              yarn
+              
+     # roda as migrations na DO
+      - name: run migrations on Digital Ocean
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}  
+          script: |
+              cd ~/app/life-admin-backend
+              ./node_modules/.bin/typeorm migration:run
+              
+     # restarta o servidorna DO
+      - name: restart server on Digital Ocean
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}  
+          script: pm2 restart api-life-admin
