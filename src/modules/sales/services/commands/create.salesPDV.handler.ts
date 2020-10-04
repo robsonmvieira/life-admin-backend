@@ -22,12 +22,12 @@ export default class CreateSalesPDVHandler {
 
   async handler(data: SaveSalesInput): Promise<SalesPDV | undefined> {
     const newSales = {
-      type_of_payment: data.type_of_payment
+      type_of_payment: data.type_of_payment,
+      descount: data.descount ? data.descount : 0
+
       // sub_total: data.sub_total, // tirar isso aqui
-      // descount: data.descount,
       // total: data.total // tirar isso aqui
     }
-    console.log('30 => ', data)
     let salesWithCollaborator = null
     let salesWithOwner = null
 
@@ -51,25 +51,21 @@ export default class CreateSalesPDVHandler {
         const salvedSale = await this.salesRepository.create(
           salesWithCollaborator
         )
-        // console.log(salvedSale)
         for (const item of data.itemsSalesPDV) {
           const createItemSalesPDVServices = container.resolve(
             CreateItemSalesPDVHandler
           )
           const itemSaved = await createItemSalesPDVServices.handler(item)
-          console.log('linha => 60', itemSaved)
           if (itemSaved) {
             salvedSale.productsPDV?.push(itemSaved)
           }
         }
         const updatedSalesPDV = await this.salesRepository.save(salvedSale)
-        console.log('colla => ', updatedSalesPDV)
         return updatedSalesPDV
       }
     } else {
       if (data.owner_id) {
         const owner = await this.ownerRepository.one(data.owner_id)
-        // console.log('entrei..', owner)
 
         if (owner) {
           salesWithOwner = Object.assign(newSales, {
@@ -79,27 +75,26 @@ export default class CreateSalesPDVHandler {
           })
 
           const savedSale = await this.salesRepository.create(salesWithOwner)
-          console.log('82', savedSale)
           for (const item of data.itemsSalesPDV) {
-            console.log('84', item)
             const createItemSalesPDVServices = container.resolve(
               CreateItemSalesPDVHandler
             )
-            // verificar essa lógica antes do if
             const itemSaved = await createItemSalesPDVServices.handler(item)
-            const savedsItens = [itemSaved]
-            console.log('91', itemSaved)
+
             if (itemSaved) {
-              // console.log('89', savedSale)
-              console.log('94')
               savedSale.productsPDV?.push(itemSaved)
-              console.log('96')
             }
           }
-          console.log('99')
+          savedSale.sub_total = String(
+            savedSale.productsPDV?.reduce((a, b) => a + b.total, 0)
+          )
+          savedSale.total = String(
+            data.descount === 0
+              ? savedSale.sub_total
+              : Number(savedSale.sub_total) - data.descount
+          )
           const updatedSalesPDV = await this.salesRepository.save(savedSale)
-          console.log('100 => ', updatedSalesPDV)
-          // return updatedSalesPDV
+          return updatedSalesPDV
         }
       }
     }
