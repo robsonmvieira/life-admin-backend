@@ -51,7 +51,7 @@ jobs:
       - name: run migrations on Digital Ocean
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_.HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}  
