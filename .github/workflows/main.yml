@@ -49,7 +49,7 @@ jobs:
               
      # roda as migrations na DO
       - name: run migrations on Digital Ocean
-        uses: appleboy/scp-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_.HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -61,7 +61,7 @@ jobs:
               
      # restarta o servidorna DO
       - name: restart server on Digital Ocean
-        uses: appleboy/scp-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_.HOST }}
           username: ${{ secrets.SSH_USER }}
