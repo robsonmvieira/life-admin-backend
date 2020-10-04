@@ -2,11 +2,20 @@ import Collaborator from '@modules/collaborators/models/collaborator'
 import ItemSalesPDV from '@modules/itemSalesPDV/models/itemSalesPDV'
 import Owner from '@modules/owner/models/owner'
 import Base from '@shared/baseEntity/entity'
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm'
+import { Exclude } from 'class-transformer'
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne
+} from 'typeorm'
 
 @Entity('sales_pdv')
 export default class SalesPDV extends Base {
   @Column({ nullable: true })
+  @Exclude()
   collaborator_id?: string
 
   @Column()
@@ -22,9 +31,10 @@ export default class SalesPDV extends Base {
   total?: string
 
   @Column({ nullable: true })
+  @Exclude()
   owner_id?: string
 
-  @OneToOne(() => Owner, { nullable: true })
+  @ManyToOne(() => Owner, { nullable: true })
   @JoinColumn()
   owner?: Owner
 
