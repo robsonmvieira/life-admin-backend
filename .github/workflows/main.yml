@@ -37,7 +37,7 @@ jobs:
       
       # instala as dependencias na DO
       - name: install dependencies on Digital Ocean
-        uses: appleboy/scp-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
