@@ -34,7 +34,4 @@ export default class Owner extends Base {
 
   @OneToMany(() => SalesPDV, sales => sales.owner)
   salesPdv?: SalesPDV[]
-  //   @OneToMany(() => Collaborator, collaborator => collaborator.user)
-  //   collaborators: Collaborator[]
-  // }
 }
