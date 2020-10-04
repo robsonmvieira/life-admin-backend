@@ -3,7 +3,7 @@ export default interface SaveSalesInput {
   owner_id?: string
   type_of_payment: string
   sub_total?: string
-  descount?: number
+  descount: number
   total?: string
   itemsSalesPDV: []
 }
