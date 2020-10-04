@@ -66,7 +66,6 @@ export default class CreateSalesPDVHandler {
     } else {
       if (data.owner_id) {
         const owner = await this.ownerRepository.one(data.owner_id)
-
         if (owner) {
           salesWithOwner = Object.assign(newSales, {
             owner,
@@ -89,10 +88,17 @@ export default class CreateSalesPDVHandler {
             savedSale.productsPDV?.reduce((a, b) => a + b.total, 0)
           )
           savedSale.total = String(
-            data.descount === 0
+            data.descount <= 0
               ? savedSale.sub_total
               : Number(savedSale.sub_total) - data.descount
           )
+
+          if (data.descount > Number(savedSale.sub_total)) {
+            throw new AppError(
+              'Você não pode dar um desconto maior do que o sub total da venda',
+              401
+            )
+          }
           const updatedSalesPDV = await this.salesRepository.save(savedSale)
           return updatedSalesPDV
         }

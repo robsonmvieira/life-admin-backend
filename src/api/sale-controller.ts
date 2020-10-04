@@ -12,7 +12,6 @@ import { classToClass } from 'class-transformer'
 export default class SaleController implements ControllerBase {
   async index(req: Request, res: Response): Promise<Response> {
     const { associado } = req.query
-
     const service = container.resolve(ListSalesPDVHandler)
 
     const salesPDV = await service.handler(String(associado))
