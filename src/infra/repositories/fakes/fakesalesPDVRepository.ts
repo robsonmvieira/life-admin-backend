@@ -2,8 +2,16 @@ import SaveSalesPDV from '@modules/sales/dtos/saveSalesPDV'
 import { UpdateSalesInput } from '@modules/sales/dtos/updateSales.input'
 import ISalesPDVRepository from '@modules/sales/interfaces/ISalesPDVRepository'
 import SalesPDV from '@modules/sales/models/sale'
-export default class SalesPDVRepository implements ISalesPDVRepository {
+export default class FakeSalesPDVRepository implements ISalesPDVRepository {
   sales: SalesPDV[] = []
+  save(data: SalesPDV): Promise<SalesPDV> {
+    throw new Error('Method not implemented.')
+  }
+
+  getSalesOfDay(ownerId: string): Promise<SalesPDV[]> {
+    throw new Error('Method not implemented.')
+  }
+
   async index(ownerId: string): Promise<SalesPDV[]> {
     return this.sales.filter(v => v.owner_id === ownerId)
   }

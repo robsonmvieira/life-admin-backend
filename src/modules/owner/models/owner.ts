@@ -5,6 +5,7 @@ import Role from '@modules/roles/models/role'
 // import Collaborator from '@modules/collaborators/models/collaborator'
 import { Exclude } from 'class-transformer'
 import ProductSale from '@modules/products/models/product'
+import SalesPDV from '@modules/sales/models/sale'
 @Entity('owners')
 export default class Owner extends Base {
   @Column({ nullable: false })
@@ -31,7 +32,6 @@ export default class Owner extends Base {
   @OneToMany(() => ProductSale, product => product.owner)
   products: ProductSale[]
 
-  //   @OneToMany(() => Collaborator, collaborator => collaborator.user)
-  //   collaborators: Collaborator[]
-  // }
+  @OneToMany(() => SalesPDV, sales => sales.owner)
+  salesPdv?: SalesPDV[]
 }
