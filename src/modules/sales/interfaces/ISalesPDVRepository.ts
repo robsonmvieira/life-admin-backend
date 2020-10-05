@@ -12,4 +12,5 @@ export default interface ISalesPDVRepository {
   getSalesByMounth(mounth: number): Promise<SalesPDV[]>
   remove(id: string): Promise<boolean>
   update(id: string, data: UpdateSalesInput): Promise<SalesPDV | undefined>
+  getSalesOfDay(ownerId: string): Promise<SalesPDV[]>
 }
