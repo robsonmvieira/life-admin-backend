@@ -1,12 +1,26 @@
+import SalesPDV from '@modules/sales/models/sale'
+import { getRepository, Raw, Repository } from 'typeorm'
 import SaveSalesInput from '@modules/sales/dtos/saveSalesPDV'
 import { UpdateSalesInput } from '@modules/sales/dtos/updateSales.input'
 import ISalesPDVRepository from '@modules/sales/interfaces/ISalesPDVRepository'
-import SalesPDV from '@modules/sales/models/sale'
-import { getRepository, Repository } from 'typeorm'
 export default class SalesPDVRepository implements ISalesPDVRepository {
   repo: Repository<SalesPDV>
   constructor() {
     this.repo = getRepository(SalesPDV)
+  }
+
+  async getSalesOfDay(ownerId: string): Promise<SalesPDV[]> {
+    const day = new Date().getDate()
+    const parsedDay = String(day).padStart(2, '0')
+    const sales = await this.repo.find({
+      where: {
+        owner_id: ownerId,
+        created_at: Raw(
+          datefieldName => `to_char(${datefieldName}, 'DD') = '${parsedDay}'`
+        )
+      }
+    })
+    return sales
   }
 
   async save(data: SalesPDV): Promise<SalesPDV> {
