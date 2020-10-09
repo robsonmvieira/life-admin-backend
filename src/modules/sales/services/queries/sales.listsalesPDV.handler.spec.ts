@@ -1,15 +1,12 @@
-import ISalesPDVRepository from '@modules/sales/interfaces/ISalesPDVRepository'
-import SalesPDV from '@modules/sales/models/sale'
-import { inject, injectable } from 'tsyringe'
-
-@injectable()
-export default class ListSalesPDVHandler {
-  constructor(
-    @inject('SalesPDVRepository')
-    private salesPDVRepository: ISalesPDVRepository
-  ) {}
-
-  async handler(id: string): Promise<SalesPDV[]> {
-    return this.salesPDVRepository.index(id)
-  }
-}
+import FakeOwnerRepository from '@infra/repositories/fakes/fakeOwnerRepository'
+import FakeSalesPDVRepository from '@infra/repositories/fakes/fakesalesPDVRepository'
+import ListSalesPDVHandler from './sales.listsalesPDV.handler'
+describe('List Sale PDV per Associate', () => {
+  let fakeSalesPDVRepository: FakeSalesPDVRepository
+  let fakeOwnerRepository: FakeOwnerRepository
+  let listSalesPDVHandler: ListSalesPDVHandler
+  beforeEach(() => {
+    fakeSalesPDVRepository = new FakeSalesPDVRepository()
+    listSalesPDVHandler = new ListSalesPDVHandler(fakeSalesPDVRepository)
+  })
+})
