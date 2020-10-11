@@ -12,7 +12,7 @@ export default class ProductSaleController implements ControllerBase {
     const { pages } = req.query
     // get owner id or collaborattor's ownerId
     // const id = req.id
-    const id = '2c7c5e72-41ef-4233-a096-67e1ded3703b'
+    const id = 'cc47f84c-2413-4876-8aa3-d969571c2ab9' // id do vital do banco em  produção
     const service = container.resolve(ListProductSaleHandler)
     const products = await service.handler(id, Number(pages))
     return res.status(200).json(classToClass(products))
