@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm'
+import { getRepository, Repository, Like } from 'typeorm'
 import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRepository'
 import CreateProductSaleInput from '@modules/products/dtos/create-product-sale-input'
 import UpdateProductSaleInput from '@modules/products/dtos/update-product-sale-input'
@@ -9,6 +9,14 @@ export default class ProductSaleRepository implements IProductSaleRepository {
 
   constructor() {
     this.repo = getRepository(ProductSale)
+  }
+
+  async findByLike(query: string): Promise<ProductSale[]> {
+    const response = await this.repo.find({
+      where: { name: Like(`%${query}`) }
+    })
+
+    return response
   }
 
   async create(data: CreateProductSaleInput): Promise<ProductSale> {
