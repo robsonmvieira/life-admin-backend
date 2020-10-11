@@ -48,6 +48,13 @@ export default class CreateOwnerHandler {
       }
     }
 
+    if (foundPermissions.length === 0 || foundRoles.length === 0) {
+      throw new AppError(
+        'Você precisa verificar os dados informados das roles e permissões',
+        400
+      )
+    }
+
     try {
       const owner = {
         name: data.name,
