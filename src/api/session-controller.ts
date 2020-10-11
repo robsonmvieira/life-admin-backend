@@ -11,7 +11,7 @@ export default class SessionController {
       'Set-Cookie',
       cookie.serialize('token', result.token, {
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 86400,
         path: '/'
       })
