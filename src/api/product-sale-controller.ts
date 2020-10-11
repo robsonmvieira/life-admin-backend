@@ -10,8 +10,11 @@ import { classToClass } from 'class-transformer'
 export default class ProductSaleController implements ControllerBase {
   async index(req: Request, res: Response): Promise<Response> {
     const { pages } = req.query
+    // get owner id or collaborattor's ownerId
+    // const id = req.id
+    const id = '2c7c5e72-41ef-4233-a096-67e1ded3703b'
     const service = container.resolve(ListProductSaleHandler)
-    const products = await service.handler(Number(pages))
+    const products = await service.handler(id, Number(pages))
     return res.status(200).json(classToClass(products))
   }
 
