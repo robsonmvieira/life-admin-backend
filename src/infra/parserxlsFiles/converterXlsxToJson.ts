@@ -53,7 +53,7 @@ export default class XlsxToJsonParser {
             name,
             category_id: cat.id,
             sku,
-            quantity: 20,
+            quantity: 0,
             volume_points,
             price_suggest,
             cost_per_pv,
