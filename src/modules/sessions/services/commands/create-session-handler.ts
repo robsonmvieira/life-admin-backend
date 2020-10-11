@@ -60,7 +60,6 @@ export default class MakeLoginHandler {
       )
       const secret = `${process.env.APP_SECRET}`
       const expiresIn = `${process.env.APP_EXESPIRE_IN}`
-      console.log(expiresIn)
       if (!passwordMatched) {
         throw new AppError('Email ou senha incorretos', 401)
       }
