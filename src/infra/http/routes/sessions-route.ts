@@ -3,6 +3,6 @@ import { Router } from 'express'
 const sessionController = new SessionController()
 const routes = Router()
 
-routes.post('/login', sessionController.login)
+routes.post('/', sessionController.login)
 
 export default routes

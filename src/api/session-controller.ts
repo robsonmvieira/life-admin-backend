@@ -1,10 +1,24 @@
 import MakeLoginHandler from '@modules/sessions/services/commands/create-session-handler'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
+import cookie from 'cookie'
 export default class SessionController {
   async login(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(MakeLoginHandler)
     const result = await service.handler(req.body)
-    return res.status(200).json(result)
+
+    res.setHeader(
+      'Set-Cookie',
+      cookie.serialize('token', result.token, {
+        httpOnly: true,
+        sameSite: 'strict',
+        maxAge: 86400,
+        path: '/'
+      })
+    )
+    res.cookie('userName', result.name)
+    res.cookie('userId', result.id)
+
+    return res.status(200).json({ status: true })
   }
 }

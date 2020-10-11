@@ -1,8 +1,7 @@
 declare namespace Express {
   export interface Request {
-    entity: {
-      id: string
-      isActive: boolean
-    }
+    id: string
+    isActive: boolean
+    name: string
   }
 }

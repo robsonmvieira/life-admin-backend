@@ -1,6 +1,5 @@
 import FakeOwnerRepository from '@infra/repositories/fakes/fakeOwnerRepository'
 import FakeSalesPDVRepository from '@infra/repositories/fakes/fakesalesPDVRepository'
-import Permission from '@modules/permissions/models/permission'
 import ListSalesOfDayPDVHandler from './listSalesOfDayPDV.handler'
 
 let fakeSalesRepository: FakeSalesPDVRepository
