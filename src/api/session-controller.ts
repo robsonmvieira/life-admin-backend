@@ -1,14 +1,14 @@
 /* eslint-disable comma-spacing */
 /* eslint-disable space-infix-ops */
 /* eslint-disable prettier/prettier */
-import MakeLoginHandler from '@modules/sessions/services/commands/create-session-handler'
+// import MakeLoginHandler from '@modules/sessions/services/commands/create-session-handler'
 import { Request, Response } from 'express'
-import { container } from 'tsyringe'
-import cookie from 'cookie'
+// import { container } from 'tsyringe'
+// import cookie from 'cookie'
 export default class SessionController {
   async login(req: Request, res: Response): Promise<Response> {
-    const service = container.resolve(MakeLoginHandler)
-    const result = await service.handler(req.body)
+    // const service = container.resolve(MakeLoginHandler)
+    // const result = await service.handler(req.body)
 
     // res.setHeader(
     //   'Set-Cookie',

@@ -2,7 +2,7 @@ import { Router } from 'express'
 import ProductSaleController from '@api/product-sale-controller'
 // import authenticated from '../../../shared/middlewares/auth'
 // import checkRoleMiddleware from '../../../shared/middlewares/check-roles'
-import checkListProductPermission from '@shared/middlewares/check-list-product'
+// import checkListProductPermission from '@shared/middlewares/check-list-product'
 const productController = new ProductSaleController()
 const routes = Router()
 // routes.use(authenticated)
