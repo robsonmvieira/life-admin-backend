@@ -4,7 +4,7 @@ import UpdateProductSaleInput from '../dtos/update-product-sale-input'
 
 export default interface IProductSaleRepository {
   create(data: CreateProductSaleInput): Promise<ProductSale>
-  index(itemPerPage: number): Promise<ProductSale[]>
+  index(ownerId: string, itemPerPage: number): Promise<ProductSale[]>
   one(id: string): Promise<ProductSale | undefined>
   update(
     id: string,
