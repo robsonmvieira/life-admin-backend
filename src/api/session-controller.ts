@@ -1,3 +1,6 @@
+/* eslint-disable comma-spacing */
+/* eslint-disable space-infix-ops */
+/* eslint-disable prettier/prettier */
 import MakeLoginHandler from '@modules/sessions/services/commands/create-session-handler'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
@@ -11,7 +14,7 @@ export default class SessionController {
       'Set-Cookie',
       cookie.serialize('token', result.token, {
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: 'none',
         maxAge: 86400,
         path: '/',
         secure: true
