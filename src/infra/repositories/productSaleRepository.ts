@@ -20,9 +20,13 @@ export default class ProductSaleRepository implements IProductSaleRepository {
     }
   }
 
-  async index(itemPerPage: number): Promise<ProductSale[]> {
+  async index(ownerId: string, itemPerPage: number): Promise<ProductSale[]> {
     const quantityPerPage = itemPerPage * 10
-    return await this.repo.find({ skip: quantityPerPage, take: 10 })
+    return await this.repo.find({
+      where: { owner_id: ownerId },
+      skip: quantityPerPage,
+      take: 10
+    })
   }
 
   async one(id: string): Promise<ProductSale | undefined> {
