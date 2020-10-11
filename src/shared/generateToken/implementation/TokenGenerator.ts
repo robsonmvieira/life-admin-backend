@@ -3,7 +3,7 @@ import { sign } from 'jsonwebtoken'
 
 export default class TokenGenerator implements ITokenGenerator {
   async generateToken(
-    payload: { isActive: boolean },
+    payload: { id: string },
     secretKey: string,
     options: { subject: string; expiresIn: string }
   ): Promise<string> {
