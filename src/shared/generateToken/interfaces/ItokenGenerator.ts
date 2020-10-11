@@ -1,6 +1,6 @@
 export default interface ITokenGenerator {
   generateToken(
-    payload: { isActive: boolean },
+    payload: { id: string },
     secretKey: string,
     options: { subject: string; expiresIn: string }
   ): Promise<string>
