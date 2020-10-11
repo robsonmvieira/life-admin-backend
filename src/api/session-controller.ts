@@ -10,8 +10,8 @@ export default class SessionController {
     res.setHeader(
       'Set-Cookie',
       cookie.serialize('token', result.token, {
-        httpOnly: false,
-        sameSite: 'none',
+        httpOnly: true,
+        sameSite: 'strict',
         maxAge: 86400,
         path: '/',
         secure: true
