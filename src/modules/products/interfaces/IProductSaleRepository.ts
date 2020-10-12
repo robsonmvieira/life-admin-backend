@@ -12,5 +12,5 @@ export default interface IProductSaleRepository {
   ): Promise<ProductSale | undefined>
   remove(id: string): Promise<boolean>
   countDb(): Promise<number>
-  findByLike(query: string): Promise<ProductSale[]>
+  findByLike(owner_id: string, query: string): Promise<ProductSale[]>
 }
