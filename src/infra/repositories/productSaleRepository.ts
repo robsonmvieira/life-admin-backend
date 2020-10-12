@@ -1,4 +1,4 @@
-import { getRepository, Repository, Like } from 'typeorm'
+import { getRepository, Repository, ILike, Raw } from 'typeorm'
 import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRepository'
 import CreateProductSaleInput from '@modules/products/dtos/create-product-sale-input'
 import UpdateProductSaleInput from '@modules/products/dtos/update-product-sale-input'
@@ -11,11 +11,13 @@ export default class ProductSaleRepository implements IProductSaleRepository {
     this.repo = getRepository(ProductSale)
   }
 
-  async findByLike(query: string): Promise<ProductSale[]> {
+  async findByLike(owner_id: string, query: string): Promise<ProductSale[]> {
     const response = await this.repo.find({
-      where: { name: Like(`%${query}`) }
+      where: {
+        owner_id,
+        name: Raw(alias => `${alias} ILIKE '%${query}%'`)
+      }
     })
-
     return response
   }
 
