@@ -8,7 +8,7 @@ export default class ListProductSaleHandler {
     @inject('ProductSaleRepository') private repo: ProductSaleRepository
   ) {}
 
-  async handler(itensPerPage: number): Promise<ProductSale[]> {
-    return await this.repo.index(itensPerPage)
+  async handler(ownerId: string, itensPerPage: number): Promise<ProductSale[]> {
+    return await this.repo.index(ownerId, itensPerPage)
   }
 }

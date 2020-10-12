@@ -4,7 +4,7 @@ import UpdateProductSaleInput from '../dtos/update-product-sale-input'
 
 export default interface IProductSaleRepository {
   create(data: CreateProductSaleInput): Promise<ProductSale>
-  index(itemPerPage: number): Promise<ProductSale[]>
+  index(ownerId: string, itemPerPage: number): Promise<ProductSale[]>
   one(id: string): Promise<ProductSale | undefined>
   update(
     id: string,
@@ -12,4 +12,5 @@ export default interface IProductSaleRepository {
   ): Promise<ProductSale | undefined>
   remove(id: string): Promise<boolean>
   countDb(): Promise<number>
+  findByLike(query: string): Promise<ProductSale[]>
 }

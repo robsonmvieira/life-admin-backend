@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm'
+import { getRepository, Repository, Like } from 'typeorm'
 import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRepository'
 import CreateProductSaleInput from '@modules/products/dtos/create-product-sale-input'
 import UpdateProductSaleInput from '@modules/products/dtos/update-product-sale-input'
@@ -11,6 +11,14 @@ export default class ProductSaleRepository implements IProductSaleRepository {
     this.repo = getRepository(ProductSale)
   }
 
+  async findByLike(query: string): Promise<ProductSale[]> {
+    const response = await this.repo.find({
+      where: { name: Like(`%${query}`) }
+    })
+
+    return response
+  }
+
   async create(data: CreateProductSaleInput): Promise<ProductSale> {
     try {
       return await this.repo.save(data)
@@ -20,9 +28,13 @@ export default class ProductSaleRepository implements IProductSaleRepository {
     }
   }
 
-  async index(itemPerPage: number): Promise<ProductSale[]> {
+  async index(ownerId: string, itemPerPage: number): Promise<ProductSale[]> {
     const quantityPerPage = itemPerPage * 10
-    return await this.repo.find({ skip: quantityPerPage, take: 10 })
+    return await this.repo.find({
+      where: { owner_id: ownerId },
+      skip: quantityPerPage,
+      take: 10
+    })
   }
 
   async one(id: string): Promise<ProductSale | undefined> {

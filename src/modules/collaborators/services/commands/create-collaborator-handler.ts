@@ -52,6 +52,13 @@ export default class CreateCollaboratorHandler {
       }
     }
 
+    if (foundPermissions.length === 0 || foundRoles.length === 0) {
+      throw new AppError(
+        'Você precisa verificar os dados informados das roles e permissões',
+        400
+      )
+    }
+
     const owner = await this.ownerRepository.one(data.owner_id)
     if (!owner) {
       throw new AppError(
