@@ -1,4 +1,4 @@
-import { getRepository, Repository, ILike, Raw } from 'typeorm'
+import { getRepository, Repository, Raw } from 'typeorm'
 import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRepository'
 import CreateProductSaleInput from '@modules/products/dtos/create-product-sale-input'
 import UpdateProductSaleInput from '@modules/products/dtos/update-product-sale-input'
