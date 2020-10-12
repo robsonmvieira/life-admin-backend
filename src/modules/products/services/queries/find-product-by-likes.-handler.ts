@@ -8,7 +8,7 @@ export default class FindProductsByLikes {
     @inject('ProductSaleRepository') private repo: ProductSaleRepository
   ) {}
 
-  async handler(query: string): Promise<ProductSale[]> {
-    return await this.repo.findByLike(query)
+  async handler(owner_id: string, query: string): Promise<ProductSale[]> {
+    return await this.repo.findByLike(owner_id, query)
   }
 }
