@@ -32,7 +32,7 @@ export default class CreateItemSalesPDVHandler {
       // verifica a quantidade no estoque do produto antes de iniciar a venda
       if (data.product_quantity > hasProduct.quantity) {
         throw new AppError(
-          `A Quantidade escolhida para o produto ${hasProduct.name}`,
+          `A Quantidade escolhida para o produto ${hasProduct.name} foi maior do que a quantidade em estoque`,
           401
         )
       }
