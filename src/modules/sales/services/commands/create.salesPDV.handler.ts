@@ -28,6 +28,7 @@ export default class CreateSalesPDVHandler {
       // sub_total: data.sub_total, // tirar isso aqui
       // total: data.total // tirar isso aqui
     }
+    // console.log(data)
     let salesWithCollaborator = null
     let salesWithOwner = null
 
@@ -78,7 +79,8 @@ export default class CreateSalesPDVHandler {
             const createItemSalesPDVServices = container.resolve(
               CreateItemSalesPDVHandler
             )
-            const itemSaved = await createItemSalesPDVServices.handler(item)
+            const itemSale = Object.assign(item, { salesPDV: savedSale.id })
+            const itemSaved = await createItemSalesPDVServices.handler(itemSale)
 
             if (itemSaved) {
               savedSale.productsPDV?.push(itemSaved)
