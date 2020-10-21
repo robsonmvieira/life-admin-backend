@@ -49,7 +49,7 @@ export default class CreateSalesPDVHandler {
           collaborator_id: collaborator.id,
           productsPDV: []
         })
-        const salvedSale = await this.salesRepository.create(
+        const savedSale = await this.salesRepository.create(
           salesWithCollaborator
         )
         for (const item of data.itemsSalesPDV) {
@@ -58,10 +58,31 @@ export default class CreateSalesPDVHandler {
           )
           const itemSaved = await createItemSalesPDVServices.handler(item)
           if (itemSaved) {
-            salvedSale.productsPDV?.push(itemSaved)
+            savedSale.productsPDV?.push(itemSaved)
+          } else {
+            await this.salesRepository.remove(savedSale.id)
+            throw new AppError(
+              `Não foi possível incluir O Item ${item} na Compra não. A Compra foi cancelada`,
+              500
+            )
           }
         }
-        const updatedSalesPDV = await this.salesRepository.save(salvedSale)
+        savedSale.sub_total = String(
+          savedSale.productsPDV?.reduce((a, b) => a + b.total, 0)
+        )
+        savedSale.total = String(
+          data.descount <= 0
+            ? savedSale.sub_total
+            : Number(savedSale.sub_total) - data.descount
+        )
+        if (data.descount > Number(savedSale.sub_total)) {
+          await this.salesRepository.remove(savedSale.id)
+          throw new AppError(
+            'Você não pode dar um desconto maior do que o sub total da venda',
+            401
+          )
+        }
+        const updatedSalesPDV = await this.salesRepository.save(savedSale)
         return updatedSalesPDV
       }
     } else {
@@ -84,6 +105,12 @@ export default class CreateSalesPDVHandler {
 
             if (itemSaved) {
               savedSale.productsPDV?.push(itemSaved)
+            } else {
+              await this.salesRepository.remove(savedSale.id)
+              throw new AppError(
+                `Não foi possível incluir O Item ${item} na Compra não. A Compra foi cancelada`,
+                500
+              )
             }
           }
           savedSale.sub_total = String(
@@ -94,8 +121,8 @@ export default class CreateSalesPDVHandler {
               ? savedSale.sub_total
               : Number(savedSale.sub_total) - data.descount
           )
-
           if (data.descount > Number(savedSale.sub_total)) {
+            await this.salesRepository.remove(savedSale.id)
             throw new AppError(
               'Você não pode dar um desconto maior do que o sub total da venda',
               401
