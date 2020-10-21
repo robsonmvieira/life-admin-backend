@@ -8,8 +8,9 @@ import GetCategoryByNameHandler from '@modules/categories/services/queries/get-b
 import ListSalesPDVHandler from '@modules/sales/services/queries/sales.listsalesPDV.handler'
 import CreateSalesPDVHandler from '@modules/sales/services/commands/create.salesPDV.handler'
 import { classToClass } from 'class-transformer'
+import GetOneSalesPDVHandler from '@modules/sales/services/queries/sales.getonesalePDV.handler'
 
-export default class SaleController implements ControllerBase {
+export default class SaleController {
   async index(req: Request, res: Response): Promise<Response> {
     const { associado } = req.query
     const service = container.resolve(ListSalesPDVHandler)
@@ -20,9 +21,9 @@ export default class SaleController implements ControllerBase {
 
   async one(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
-    const service = container.resolve(GetCategoryHandler)
-    const hasCategory = await service.handler(id)
-    return res.status(200).json(hasCategory)
+    const service = container.resolve(GetOneSalesPDVHandler)
+    const hasSales = await service.handler(id)
+    return res.status(200).json(hasSales)
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -30,27 +31,5 @@ export default class SaleController implements ControllerBase {
     const service = container.resolve(CreateSalesPDVHandler)
     const result = await service.handler(classToClass(newSalesPDV))
     return res.status(201).json(result)
-  }
-
-  async update(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params
-    const data = req.body
-    const service = container.resolve(UpdadeCategoryHandler)
-    const updatedCategory = await service.handler(id, data)
-    return res.status(201).json(updatedCategory)
-  }
-
-  async remove(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params
-    const service = container.resolve(RemoveCategoryHandler)
-    const isDeletedCategory = await service.handler(id)
-    return res.status(200).json(isDeletedCategory)
-  }
-
-  async findByName(req: Request, res: Response): Promise<Response> {
-    const data = req.params.name
-    const service = container.resolve(GetCategoryByNameHandler)
-    const hasCategory = await service.handler(data)
-    return res.status(200).json(hasCategory)
   }
 }
