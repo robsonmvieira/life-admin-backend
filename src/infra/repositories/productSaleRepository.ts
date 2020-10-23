@@ -3,12 +3,22 @@ import IProductSaleRepository from '@modules/products/interfaces/IProductSaleRep
 import CreateProductSaleInput from '@modules/products/dtos/create-product-sale-input'
 import UpdateProductSaleInput from '@modules/products/dtos/update-product-sale-input'
 import ProductSale from '@modules/products/models/product'
+import AppError from '@infra/errors/AppError'
 
 export default class ProductSaleRepository implements IProductSaleRepository {
   repo: Repository<ProductSale>
 
   constructor() {
     this.repo = getRepository(ProductSale)
+  }
+
+  async clearTable(): Promise<boolean> {
+    try {
+      await this.repo.clear()
+      return true
+    } catch (error) {
+      throw new AppError('Não foi possível Zerar a Tabela', 500)
+    }
   }
 
   async findByLike(owner_id: string, query: string): Promise<ProductSale[]> {
