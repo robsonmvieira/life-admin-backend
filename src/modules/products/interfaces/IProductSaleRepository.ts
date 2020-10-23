@@ -13,4 +13,5 @@ export default interface IProductSaleRepository {
   remove(id: string): Promise<boolean>
   countDb(): Promise<number>
   findByLike(owner_id: string, query: string): Promise<ProductSale[]>
+  clearTable(): Promise<boolean>
 }

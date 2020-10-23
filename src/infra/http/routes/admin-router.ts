@@ -2,9 +2,10 @@ import AdminController from '@api/admin-controller'
 import { Router } from 'express'
 
 const routes = Router()
-const adminCtl = new AdminController()
+const adminController = new AdminController()
 
-routes.post('/converter', adminCtl.convertXlsx)
-routes.get('/listProductsFromDb', adminCtl.productsListLengthFromDb)
+routes.post('/converter', adminController.convertXlsx)
+routes.get('/listProductsFromDb', adminController.productsListLengthFromDb)
+routes.get('/clearProductPDVTable', adminController.clearProductSale)
 
 export default routes
