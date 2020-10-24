@@ -19,7 +19,6 @@ export default class XlsxToJsonParser {
     )
     const workeBook = xlsx.readFile(filePath)
 
-    const tabList = workeBook.SheetNames
     let data: CreateProductSaleInput = {
       owner_id: '',
       name: '',
@@ -34,37 +33,36 @@ export default class XlsxToJsonParser {
       from_one_thousand_to_three_thousand_nine_hundred_ninety_nine: 0,
       more_than_four_thousand: 0
     }
-    const tabs = tabList.map((t, index) => workeBook.Sheets[tabList[index]])
-    const tabsToJson: any[] = tabs.map(t => xlsx.utils.sheet_to_json(t))
-    const addProductHandler = container.resolve(CreateProductSalerHandler)
-    for (const tabs of tabsToJson) {
-      for (const tab of tabs) {
-        const categoryName = tab.__EMPTY
-        const sku = tab.__EMPTY_1
-        const name = tab.__EMPTY_2
-        const volume_points = tab.__EMPTY_3
-        const price_suggest = tab.__EMPTY_4
-        const cost_per_pv = tab.__EMPTY_6
-        const categoryHandler = container.resolve(GetCategoryByNameHandler)
-        const cat = await categoryHandler.handler(categoryName)
-        if (cat) {
-          data = {
-            owner_id: ownerId,
-            name,
-            category_id: cat.id,
-            sku,
-            quantity: 0,
-            volume_points,
-            price_suggest,
-            cost_per_pv,
-            from_zero_to_four_hundred_ninety_nine: 0,
-            from_five_hundred_to_nine_hundred_ninety_nine: 0,
-            from_one_thousand_to_three_thousand_nine_hundred_ninety_nine: 0,
-            more_than_four_thousand: 0
-          }
 
-          await addProductHandler.handler(data)
+    const geralToJson: any[] = xlsx.utils.sheet_to_json(workeBook.Sheets.geral)
+
+    const addProductHandler = container.resolve(CreateProductSalerHandler)
+
+    for (const tabs of geralToJson) {
+      const categoryName = String(tabs.__EMPTY).trim()
+      const sku = String(tabs.__EMPTY_1).trim()
+      const name = String(tabs.__EMPTY_2).trim()
+      const volume_points = tabs.__EMPTY_3
+      const price_suggest = tabs.__EMPTY_4
+      const cost_per_pv = tabs.__EMPTY_6
+      const categoryHandler = container.resolve(GetCategoryByNameHandler)
+      const cat = await categoryHandler.handler(categoryName)
+      if (cat) {
+        data = {
+          owner_id: ownerId,
+          name,
+          category_id: cat.id,
+          sku,
+          quantity: 0,
+          volume_points,
+          price_suggest,
+          cost_per_pv,
+          from_zero_to_four_hundred_ninety_nine: 0,
+          from_five_hundred_to_nine_hundred_ninety_nine: 0,
+          from_one_thousand_to_three_thousand_nine_hundred_ninety_nine: 0,
+          more_than_four_thousand: 0
         }
+        await addProductHandler.handler(data)
       }
     }
   }
