@@ -45,77 +45,83 @@ export default class Client extends Base {
   height: number
 
   @Column()
-  allergies: string
+  allergies?: string
 
   @Column()
-  last_sale: Date
+  others?: string
+
+  @Column()
+  last_sale?: Date
 
   @Column({ nullable: false, default: false })
-  premium: boolean
+  premium?: boolean
 
   @Column({ nullable: false, default: false })
-  triglicerideos: boolean
+  triglicerideos?: boolean
 
   @Column({ nullable: false, default: false })
-  alergia: boolean
+  alergia?: boolean
 
   @Column({ nullable: false, default: false })
-  anemia: boolean
+  anemia?: boolean
 
   @Column({ nullable: false, default: false })
-  colesterol: boolean
+  colesterol?: boolean
 
   @Column({ nullable: false, default: false })
-  dor_nas_pernas: boolean
+  dor_nas_pernas?: boolean
 
   @Column({ nullable: false, default: false })
-  pressao_baixa: boolean
+  pressao_baixa?: boolean
 
   @Column({ nullable: false, default: false })
-  artrose: boolean
+  artrose?: boolean
 
   @Column({ nullable: false, default: false })
-  sonolencia: boolean
+  sonolencia?: boolean
 
   @Column({ nullable: false, default: false })
-  dor_de_Cabeca: boolean
+  dor_de_Cabeca?: boolean
 
   @Column({ nullable: false, default: false })
-  hipertensao: boolean
+  hipertensao?: boolean
 
   @Column({ nullable: false, default: false })
-  insonia: boolean
+  insonia?: boolean
 
   @Column({ nullable: false, default: false })
-  rinite: boolean
+  rinite?: boolean
 
   @Column({ nullable: false, default: false })
-  depressao: boolean
+  depressao?: boolean
 
   @Column({ nullable: false, default: false })
-  asma: boolean
+  asma?: boolean
 
   @Column({ nullable: false, default: false })
-  indisposicao: boolean
+  indisposicao?: boolean
 
   @Column({ nullable: false, default: false })
-  gastrite: boolean
+  gastrite?: boolean
 
   @Column({ nullable: false, default: false })
-  diabetes: boolean
+  diabetes?: boolean
 
   @Column({ nullable: false, default: false })
-  osteoporose: boolean
+  osteoporose?: boolean
 
   @Column({ nullable: false, default: false })
-  cardiopatias: boolean
+  cardiopatias?: boolean
 
   @Column({ nullable: false, default: false })
-  intestino_preso: boolean
+  intestino_preso?: boolean
 
   @OneToMany(() => SalesPDV, sales => sales.client)
   salesPdv?: SalesPDV[]
 
   @ManyToOne(() => Owner)
   owner: Owner
+
+  @Column()
+  owner_id: string
 }
