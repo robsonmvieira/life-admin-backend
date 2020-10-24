@@ -26,6 +26,9 @@ export default class ProductSaleRepository implements IProductSaleRepository {
       where: {
         owner_id,
         name: Raw(alias => `${alias} ILIKE '%${query}%'`)
+      },
+      order: {
+        updated_at: 'DESC'
       }
     })
     return response
@@ -45,7 +48,10 @@ export default class ProductSaleRepository implements IProductSaleRepository {
     return await this.repo.find({
       where: { owner_id: ownerId },
       skip: quantityPerPage,
-      take: 10
+      take: 10,
+      order: {
+        updated_at: 'DESC'
+      }
     })
   }
 
