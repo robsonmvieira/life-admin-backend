@@ -16,6 +16,8 @@ import ISalesPDVRepository from '@modules/sales/interfaces/ISalesPDVRepository'
 import SalesPDVRepository from '@infra/repositories/salesRepository'
 import IItemSalesPDVRepository from '@modules/itemSalesPDV/interfaces/IItemSalesPDVRepository'
 import ItemSalesPDVRepository from '@infra/repositories/itemSalesPDVRepository'
+import IClientRepository from '@modules/clients/interfaces/IClientRepository'
+import ClientRepository from '@infra/repositories/clientRepository'
 
 container.registerSingleton<ICategoryRepository>(
   'CategoryRepository',
@@ -46,4 +48,8 @@ container.registerSingleton<ISalesPDVRepository>(
 container.registerSingleton<IItemSalesPDVRepository>(
   'ItemSalesPDVRepository',
   ItemSalesPDVRepository
+)
+container.registerSingleton<IClientRepository>(
+  'ClientRepository',
+  ClientRepository
 )
