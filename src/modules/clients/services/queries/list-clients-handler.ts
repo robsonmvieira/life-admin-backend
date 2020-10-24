@@ -6,7 +6,7 @@ import { inject, injectable } from 'tsyringe'
 export default class ListClientHandler {
   constructor(@inject('ClientRepository') private repo: IClientRepository) {}
 
-  async hendler(owerId: string): Promise<Client[]> {
+  async handler(owerId: string): Promise<Client[]> {
     return await this.repo.index(owerId)
   }
 }
