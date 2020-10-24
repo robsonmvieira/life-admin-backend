@@ -1,3 +1,4 @@
+import Client from '@modules/clients/models/client'
 import Collaborator from '@modules/collaborators/models/collaborator'
 import ItemSalesPDV from '@modules/itemSalesPDV/models/itemSalesPDV'
 import Owner from '@modules/owner/models/owner'
@@ -34,9 +35,17 @@ export default class SalesPDV extends Base {
   @Exclude()
   owner_id?: string
 
+  @Column({ nullable: true })
+  @Exclude()
+  client_id?: string
+
   @ManyToOne(() => Owner, { nullable: true })
   @JoinColumn()
   owner?: Owner
+
+  @ManyToOne(() => Client, { nullable: true })
+  @JoinColumn()
+  client?: Client
 
   @OneToOne(() => Collaborator, { nullable: true })
   @JoinColumn()
