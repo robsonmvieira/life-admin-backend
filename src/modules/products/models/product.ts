@@ -6,7 +6,7 @@ import SalesPDV from '@modules/sales/models/sale'
 
 @Entity('products_pdv_sale')
 export default class ProductSale extends Base {
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   sku: string
 
   @Column({ nullable: false })
